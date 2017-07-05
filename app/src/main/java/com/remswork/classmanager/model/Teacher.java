@@ -12,7 +12,7 @@ public class Teacher implements Parcelable {
     private int id;
     private String firstName;
     private String lastName;
-    private String username;
+    private String email;
     private String password;
 
     public static final Creator<Teacher> CREATOR = new Creator<Teacher>() {
@@ -31,11 +31,11 @@ public class Teacher implements Parcelable {
         super();
     }
 
-    public Teacher(int id, String firstName, String lastName, String username, String password) {
+    public Teacher(int id, String firstName, String lastName, String email, String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.username = username;
+        this.email = email;
         this.password = password;
     }
 
@@ -43,6 +43,8 @@ public class Teacher implements Parcelable {
         this.id = source.readInt();
         this.firstName = source.readString();
         this.lastName = source.readString();
+        this.email = source.readString();
+        this.password = source.readString();
     }
 
     @Override
@@ -55,7 +57,7 @@ public class Teacher implements Parcelable {
         dest.writeInt(id);
         dest.writeString(firstName);
         dest.writeString(lastName);
-        dest.writeString(username);
+        dest.writeString(email);
         dest.writeString(password);
     }
 
@@ -83,12 +85,12 @@ public class Teacher implements Parcelable {
         this.lastName = lastName;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -105,7 +107,7 @@ public class Teacher implements Parcelable {
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';
     }

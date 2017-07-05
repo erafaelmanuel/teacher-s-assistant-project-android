@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHelper extends SQLiteOpenHelper{
 
     public static final String DATABASE_NAME = "classmanager.db";
-    public static final int VERSION = 1;
+    public static final int VERSION = 2;
 
     public DatabaseHelper(Context context, String databaseName, int version){
         super(context, databaseName, null, version);
@@ -26,4 +26,5 @@ public class DatabaseHelper extends SQLiteOpenHelper{
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
     }
+
 }

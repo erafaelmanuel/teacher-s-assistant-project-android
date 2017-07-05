@@ -4,5 +4,12 @@
     <string name="text_password">Password</string>
     <string name="text_username">Username</string>
     <string name="dummy_view">Dummy View</string>
-    <string name="button">Button</string>
+    <string name="button">Logout</string>
+    <string name="fragment_register_text_view_close">Close</string>
+    <string name="fragment_register_button_email">Email</string>
+    <string name="fragment_register_text_firstname">First Name</string>
+    <string name="fragment_register_text_lastname">Last Name</string>
+    <string name="fragment_register_text_password">Password</string>
+    <string name="fragment_register_button_register">Register</string>
+    <string name="activity_login_button_signup">Sign Up</string>
 </resources>

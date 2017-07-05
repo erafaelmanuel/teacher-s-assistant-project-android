@@ -19,7 +19,7 @@ import com.remswork.classmanager.R;
 
 public class LoginFragment extends Fragment implements View.OnClickListener {
 
-    private EditText textUsername;
+    private EditText textEmail;
     private EditText textPassword;
     private Button buttonLogin;
     private LoginFragmentListener loginFragmentListener;
@@ -30,7 +30,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
-        textUsername = (EditText) view.findViewById(R.id.text_username);
+        textEmail = (EditText) view.findViewById(R.id.text_username);
         textPassword = (EditText) view.findViewById(R.id.text_password);
         buttonLogin = (Button) view.findViewById(R.id.button_login);
         buttonLogin.setOnClickListener(this);
@@ -49,11 +49,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        loginFragmentListener.loginCommand(textUsername.getText().toString(),
+        loginFragmentListener.loginCommand(textEmail.getText().toString(),
                 textPassword.getText().toString());
     }
 
     public interface LoginFragmentListener{
-        public void loginCommand(String username, String password);
+        public void loginCommand(String email, String password);
     }
 }

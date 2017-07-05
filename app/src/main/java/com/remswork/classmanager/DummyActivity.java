@@ -26,7 +26,6 @@ public class DummyActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         moveTaskToBack(true);
     }
 

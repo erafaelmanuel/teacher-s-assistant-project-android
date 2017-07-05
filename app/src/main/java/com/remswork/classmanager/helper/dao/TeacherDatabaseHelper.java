@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.remswork.classmanager.model.Teacher;
 
@@ -16,6 +17,7 @@ import java.util.List;
  */
 
 public class TeacherDatabaseHelper extends DatabaseHelper {
+
     /**
      *
      */
@@ -39,7 +41,7 @@ public class TeacherDatabaseHelper extends DatabaseHelper {
     /**
      *
      */
-    public static final String COL4 = "username";
+    public static final String COL4 = "email";
 
     /**
      *
@@ -75,8 +77,17 @@ public class TeacherDatabaseHelper extends DatabaseHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         super.onUpgrade(db, oldVersion, newVersion);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS '" + TABLE_NAME + "'");
         onCreate(db);
+    }
+
+    /**
+     *
+     * @param isYes
+     */
+    public void upgradeTable(boolean isYes){
+        if(isYes)
+            onUpgrade(getWritableDatabase(), VERSION - 1, VERSION);
     }
 
     /**
@@ -91,7 +102,7 @@ public class TeacherDatabaseHelper extends DatabaseHelper {
             ContentValues contentValues = new ContentValues();
             contentValues.put(COL2, teacher.getFirstName());
             contentValues.put(COL3, teacher.getLastName());
-            contentValues.put(COL4, teacher.getUsername());
+            contentValues.put(COL4, teacher.getEmail());
             contentValues.put(COL5, teacher.getPassword());
 
             db.insert(TABLE_NAME, null, contentValues);
@@ -119,7 +130,7 @@ public class TeacherDatabaseHelper extends DatabaseHelper {
                 teacher.setId(cursor.getInt(0));
                 teacher.setFirstName(cursor.getString(1));
                 teacher.setLastName(cursor.getString(2));
-                teacher.setUsername(cursor.getString(3));
+                teacher.setEmail(cursor.getString(3));
                 teacher.setPassword(cursor.getString(4));
                 listOfTeacher.add(teacher);
             }
@@ -142,7 +153,7 @@ public class TeacherDatabaseHelper extends DatabaseHelper {
                 teacher.setId(cursor.getInt(0));
                 teacher.setFirstName(cursor.getString(1));
                 teacher.setLastName(cursor.getString(2));
-                teacher.setUsername(cursor.getString(3));
+                teacher.setEmail(cursor.getString(3));
                 teacher.setPassword(cursor.getString(4));
             }
             return teacher;
@@ -152,18 +163,18 @@ public class TeacherDatabaseHelper extends DatabaseHelper {
         }
     }
 
-    public Teacher getTeacherByUsername(final String username){
+    public Teacher getTeacherByEmail(final String email){
         Teacher teacher = new Teacher();
         try{
             SQLiteDatabase db = getWritableDatabase();
             String query = String.format("SELECT * FROM %s WHERE %s = ?", TABLE_NAME, COL4);
-            Cursor cursor = db.rawQuery(query, new String[]{username});
+            Cursor cursor = db.rawQuery(query, new String[]{email});
 
             while (cursor.moveToNext()){
                 teacher.setId(cursor.getInt(0));
                 teacher.setFirstName(cursor.getString(1));
                 teacher.setLastName(cursor.getString(2));
-                teacher.setUsername(cursor.getString(3));
+                teacher.setEmail(cursor.getString(3));
                 teacher.setPassword(cursor.getString(4));
             }
             return teacher;
@@ -175,25 +186,25 @@ public class TeacherDatabaseHelper extends DatabaseHelper {
 
     /**
      *
-     * @param username
+     * @param email
      * @param password
      * @return
      */
-    public HashMap getTeacherAuthenticate(String username, String password){
+    public HashMap getTeacherAuthenticate(String email, String password){
         HashMap map = new HashMap();
 
         try{
             Teacher teacher = new Teacher();
             SQLiteDatabase db = getWritableDatabase();
             String query = String.format("SELECT * FROM %s WHERE %s = ? AND %s = ? LIMIT 1", TABLE_NAME, COL4, COL5);
-            Cursor cursor = db.rawQuery(query, new String[]{username, password});
+            Cursor cursor = db.rawQuery(query, new String[]{email, password});
 
             if(cursor.moveToNext()){
 
                 teacher.setId(cursor.getInt(0));
                 teacher.setFirstName(cursor.getString(1));
                 teacher.setLastName(cursor.getString(2));
-                teacher.setUsername(cursor.getString(3));
+                teacher.setEmail(cursor.getString(3));
                 teacher.setPassword(cursor.getString(4));
 
                 map.put("isSuccess", true);
@@ -210,5 +221,21 @@ public class TeacherDatabaseHelper extends DatabaseHelper {
             return  map ;
         }
 
+    }
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    public boolean deleteTeacherById(int id){
+        try{
+            SQLiteDatabase db = getWritableDatabase();
+            db.delete(TABLE_NAME, COL1 +" = ?",new String[]{String.valueOf(id)});
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 }

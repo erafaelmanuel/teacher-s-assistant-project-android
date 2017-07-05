@@ -11,10 +11,21 @@
     tools:context="com.remswork.classmanager.LoginActivity">
 
     <fragment
+        android:id="@+id/fragment_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:name="com.remswork.classmanager.fragment.LoginFragment"
         android:layout_centerHorizontal="true"
-        android:id="@+id/fragment7"
         tools:layout="@layout/fragment_login" />
+
+    <Button
+        android:id="@+id/activity_login_button_signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fragment_login"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/activity_login_button_signup"
+        android:onClick="buttonSignupClick" />
 </RelativeLayout>
