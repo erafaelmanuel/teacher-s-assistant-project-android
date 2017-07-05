@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ClassManager</string>
+    <string name="button_login">Login</string>
+    <string name="text_password">Password</string>
+    <string name="text_username">Username</string>
+    <string name="dummy_view">Dummy View</string>
+    <string name="button">Button</string>
+</resources>
