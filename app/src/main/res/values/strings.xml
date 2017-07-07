@@ -11,6 +11,6 @@
     <string name="fragment_register_text_lastname">Last Name</string>
     <string name="fragment_register_text_password">Password</string>
     <string name="fragment_register_button_register">Register</string>
-    <string name="activity_login_button_signup">Sign Up</string>
     <string name="fragment_register_button_cancel">Cancel</string>
+    <string name="fragment_login_button_signup">Sign Up</string>
 </resources>

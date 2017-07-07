@@ -65,11 +65,8 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment
      * @param password
      */
     @Override
-    public void loginCommand(final String email, final String password) {
-//        Log.i(TAG, email+ " "+password);
-//
-//        for(Teacher teacher :((TeacherDatabaseHelper) databaseHelper).getListOfTeacher())
-//            Log.i(TAG, teacher.toString());
+    public void doLogIn(final String email, final String password) {
+
         if((boolean) ((TeacherDatabaseHelper) databaseHelper)
                 .getTeacherAuthenticate(email, password).get("isSuccess")) {
 
@@ -79,6 +76,11 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment
                     DummyActivity.class);
         }else
             Toast.makeText(this, "Incorrect email or password", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void doSignUp() {
+        goToNextActiviy(null, RegisterActivity.class);
     }
 
     /**
@@ -128,13 +130,5 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment
         Intent intent = new Intent(this, activityClass);
         intent.putExtra("teacher", intentExtra);
         startActivity(intent);
-    }
-
-    /**
-     *
-     * @param view
-     */
-    public void buttonSignupClick(View view){
-        goToNextActiviy(null, RegisterActivity.class);
     }
 }

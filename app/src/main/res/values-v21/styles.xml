@@ -3,6 +3,20 @@
     <style name="AppTheme" parent="AppTheme.Base">
         <item name="android:colorControlActivated">@color/colorActive</item>
         <item name="android:colorControlNormal">@color/colorNormal</item>
+        <item name="android:colorButtonNormal">@color/colorPrimaryDark</item>
+        <item name="android:colorControlHighlight">@color/colorPrimary</item>
+    </style>
+
+    <style name="AppTheme.Base.Button.Normal" parent="@style/Widget.AppCompat.Button.Colored">
+        <item name="android:colorButtonNormal">@color/colorPrimaryDark</item>
+        <item name="android:colorControlHighlight">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name="AppTheme.Base.Button.Reverse" parent="@style/Widget.AppCompat.Button.Colored">
+        <item name="android:colorButtonNormal">@color/colorGray</item>
+        <item name="android:colorControlHighlight">@color/colorDarkGray</item>
+        <item name="android:textColor">@color/colorWhite</item>
     </style>
 
 </resources>

@@ -18,14 +18,4 @@
         android:layout_centerHorizontal="true"
         tools:layout="@layout/fragment_login" />
 
-    <Button
-        android:id="@+id/activity_login_button_signup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/fragment_login"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginTop="10dp"
-        android:onClick="buttonSignupClick"
-        android:text="@string/activity_login_button_signup" />
 </RelativeLayout>

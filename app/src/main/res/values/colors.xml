@@ -8,4 +8,5 @@
     <color name="colorNormal">@color/colorPrimaryDark</color>
     <color name="colorWhite">#FFF</color>
     <color name="colorGray">#9e9e9b</color>
+    <color name="colorDarkGray">#81817d</color>
 </resources>

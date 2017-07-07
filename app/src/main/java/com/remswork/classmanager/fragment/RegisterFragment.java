@@ -41,7 +41,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
      *
      * @param customView
      */
-    public void initializedWidgets(View customView){
+    public void initializeWidgets(View customView){
         textFirstName = (EditText) customView.findViewById(R.id.fragment_register_text_firstname);
         textLastName = (EditText) customView.findViewById(R.id.fragment_register_text_lastname);
         textEmail = (EditText) customView.findViewById(R.id.fragment_register_text_email);
@@ -100,7 +100,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
             @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View customView = inflater.inflate(R.layout.fragment_register, container);
-        initializedWidgets(customView);
+        initializeWidgets(customView);
         return customView;
     }
 
