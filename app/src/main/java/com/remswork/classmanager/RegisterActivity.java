@@ -42,12 +42,6 @@ public class RegisterActivity extends AppCompatActivity
         finish();
     }
 
-    /**
-     * to save a credential to SharedPreferences (cmUserLogin)
-     *
-     * @param email saved with a key 'cemail'
-     * @param password saved with a key 'cpassword'
-     */
     public void saveUserDetail(final String email, final String password){
         SharedPreferences sharedPreferences = getSharedPreferences("cmUserLogin", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -56,11 +50,6 @@ public class RegisterActivity extends AppCompatActivity
         editor.apply();
     }
 
-    /**
-     *
-     * @param intentExtra
-     * @param activityClass
-     */
     public void goToNextActiviy(Teacher intentExtra, Class activityClass){
         Intent intent = new Intent(this, activityClass);
         intent.putExtra("teacher", intentExtra);

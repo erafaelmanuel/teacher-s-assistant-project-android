@@ -18,62 +18,26 @@ import java.util.List;
 
 public class TeacherDatabaseHelper extends DatabaseHelper {
 
-    /**
-     *
-     */
     public static final String TABLE_NAME = "tbl_teacher";
+    public static final String COL_1 = "id";
+    public static final String COL_2 = "first_name";
+    public static final String COL_3 = "last_name";
+    public static final String COL_4 = "email";
+    public static final String COL_5 = "password";
 
-    /**
-     *
-     */
-    public static final String COL1 = "id";
-
-    /**
-     *
-     */
-    public static final String COL2 = "first_name";
-
-    /**
-     *
-     */
-    public static final String COL3 = "last_name";
-
-    /**
-     *
-     */
-    public static final String COL4 = "email";
-
-    /**
-     *
-     */
-    public static final String COL5 = "password";
-
-    /**
-     *
-     * @param context
-     */
     public TeacherDatabaseHelper(Context context){
         super(context, DATABASE_NAME, VERSION);
     }
 
-    /**
-     *
-     * @param db
-     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         super.onCreate(db);
         String query = String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "%s TEXT, %s TEXT, %s TEXT, %s TEXT);", TABLE_NAME, COL1, COL2, COL3, COL4, COL5);
+                "%s TEXT, %s TEXT, %s TEXT, %s TEXT);",
+                TABLE_NAME, COL_1, COL_2, COL_3, COL_4, COL_5);
         db.execSQL(query);
     }
 
-    /**
-     *
-     * @param db
-     * @param oldVersion
-     * @param newVersion
-     */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         super.onUpgrade(db, oldVersion, newVersion);
@@ -81,29 +45,19 @@ public class TeacherDatabaseHelper extends DatabaseHelper {
         onCreate(db);
     }
 
-    /**
-     *
-     * @param isYes
-     */
     public void upgradeTable(boolean isYes){
         if(isYes)
             onUpgrade(getWritableDatabase(), VERSION - 1, VERSION);
     }
 
-    /**
-     * Save the Teacher object into database
-     *
-     * @param teacher
-     * @return true if the data insertion was successful without any error
-     */
     public boolean addTeacher(Teacher teacher){
         try{
             SQLiteDatabase db = getWritableDatabase();
             ContentValues contentValues = new ContentValues();
-            contentValues.put(COL2, teacher.getFirstName());
-            contentValues.put(COL3, teacher.getLastName());
-            contentValues.put(COL4, teacher.getEmail());
-            contentValues.put(COL5, teacher.getPassword());
+            contentValues.put(COL_2, teacher.getFirstName());
+            contentValues.put(COL_3, teacher.getLastName());
+            contentValues.put(COL_4, teacher.getEmail());
+            contentValues.put(COL_5, teacher.getPassword());
 
             db.insert(TABLE_NAME, null, contentValues);
             return true;
@@ -112,11 +66,6 @@ public class TeacherDatabaseHelper extends DatabaseHelper {
             return false;
         }
     }
-
-    /**
-     *
-     * @return
-     */
 
     public List<Teacher> getListOfTeacher(){
         List<Teacher> listOfTeacher = new ArrayList<Teacher>();
@@ -146,7 +95,7 @@ public class TeacherDatabaseHelper extends DatabaseHelper {
         Teacher teacher = new Teacher();
         try{
             SQLiteDatabase db = getWritableDatabase();
-            String query = String.format("SELECT * FROM %s WHERE %s = ?", TABLE_NAME, COL1);
+            String query = String.format("SELECT * FROM %s WHERE %s = ?", TABLE_NAME, COL_1);
             Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(id)});
 
             while (cursor.moveToNext()){
@@ -167,7 +116,7 @@ public class TeacherDatabaseHelper extends DatabaseHelper {
         Teacher teacher = new Teacher();
         try{
             SQLiteDatabase db = getWritableDatabase();
-            String query = String.format("SELECT * FROM %s WHERE %s = ?", TABLE_NAME, COL4);
+            String query = String.format("SELECT * FROM %s WHERE %s = ?", TABLE_NAME, COL_4);
             Cursor cursor = db.rawQuery(query, new String[]{email});
 
             while (cursor.moveToNext()){
@@ -184,19 +133,13 @@ public class TeacherDatabaseHelper extends DatabaseHelper {
         }
     }
 
-    /**
-     *
-     * @param email
-     * @param password
-     * @return
-     */
     public HashMap getTeacherAuthenticate(String email, String password){
         HashMap map = new HashMap();
 
         try{
             Teacher teacher = new Teacher();
             SQLiteDatabase db = getWritableDatabase();
-            String query = String.format("SELECT * FROM %s WHERE %s = ? AND %s = ? LIMIT 1", TABLE_NAME, COL4, COL5);
+            String query = String.format("SELECT * FROM %s WHERE %s = ? AND %s = ? LIMIT 1", TABLE_NAME, COL_4, COL_5);
             Cursor cursor = db.rawQuery(query, new String[]{email, password});
 
             if(cursor.moveToNext()){
@@ -223,15 +166,10 @@ public class TeacherDatabaseHelper extends DatabaseHelper {
 
     }
 
-    /**
-     *
-     * @param id
-     * @return
-     */
     public boolean deleteTeacherById(int id){
         try{
             SQLiteDatabase db = getWritableDatabase();
-            db.delete(TABLE_NAME, COL1 +" = ?",new String[]{String.valueOf(id)});
+            db.delete(TABLE_NAME, COL_1 +" = ?",new String[]{String.valueOf(id)});
             return true;
         }catch (Exception e){
             e.printStackTrace();

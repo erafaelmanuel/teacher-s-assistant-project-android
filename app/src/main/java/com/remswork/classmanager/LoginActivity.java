@@ -23,20 +23,10 @@ import java.util.HashMap;
 public class LoginActivity extends AppCompatActivity implements LoginFragment
         .LoginFragmentListener{
 
-    /**
-     *
-     */
     private static final String TAG = "ClassManager";
 
-    /**
-     *
-     */
     private DatabaseHelper databaseHelper = new TeacherDatabaseHelper(this);
 
-    /**
-     *  Initializing the whole context
-     * @param savedInstanceState this is just for house keeping staff
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,10 +36,6 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment
 
     }
 
-    /**
-     * Every resume of the activity it load and check the SharedPreferences, whether or not
-     * there was an existing credentials to use
-     */
     @Override
     protected void onResume() {
         super.onResume();
@@ -59,11 +45,6 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment
         Log.i(TAG, "onResume of LoginActivity.class");
     }
 
-    /**
-     * 
-     * @param email
-     * @param password
-     */
     @Override
     public void doLogIn(final String email, final String password) {
 
@@ -83,10 +64,6 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment
         goToNextActiviy(null, RegisterActivity.class);
     }
 
-    /**
-     *
-     * @return 'isSuccess' for boolean and 'getTeacher' for the teacher's object
-     */
     public HashMap loadUserDetail(){
 
         HashMap map = new HashMap();
@@ -107,12 +84,6 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment
         return map;
     }
 
-    /**
-     * to save a credential to SharedPreferences (cmUserLogin)
-     *
-     * @param email saved with a key 'cemail'
-     * @param password saved with a key 'cpassword'
-     */
     public void saveUserDetail(final String email, final String password){
         SharedPreferences sharedPreferences = getSharedPreferences("cmUserLogin", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -121,11 +92,6 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment
         editor.apply();
     }
 
-    /**
-     *
-     * @param intentExtra
-     * @param activityClass
-     */
     public void goToNextActiviy(Teacher intentExtra, Class activityClass){
         Intent intent = new Intent(this, activityClass);
         intent.putExtra("teacher", intentExtra);
