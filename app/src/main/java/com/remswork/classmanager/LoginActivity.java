@@ -65,8 +65,11 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment
      * @param password
      */
     @Override
-    public void loginCommand(String email, String password) {
-
+    public void loginCommand(final String email, final String password) {
+//        Log.i(TAG, email+ " "+password);
+//
+//        for(Teacher teacher :((TeacherDatabaseHelper) databaseHelper).getListOfTeacher())
+//            Log.i(TAG, teacher.toString());
         if((boolean) ((TeacherDatabaseHelper) databaseHelper)
                 .getTeacherAuthenticate(email, password).get("isSuccess")) {
 

@@ -37,6 +37,11 @@ public class RegisterActivity extends AppCompatActivity
         finish();
     }
 
+    @Override
+    public void registerCancel() {
+        finish();
+    }
+
     /**
      * to save a credential to SharedPreferences (cmUserLogin)
      *

@@ -30,9 +30,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         super.onCreateView(inflater, container, savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
-        textEmail = (EditText) view.findViewById(R.id.text_username);
-        textPassword = (EditText) view.findViewById(R.id.text_password);
-        buttonLogin = (Button) view.findViewById(R.id.button_login);
+        textEmail = (EditText) view.findViewById(R.id.fragment_login_text_email);
+        textPassword = (EditText) view.findViewById(R.id.fragment_login_text_password);
+        buttonLogin = (Button) view.findViewById(R.id.fragment_login_button_login);
         buttonLogin.setOnClickListener(this);
 
         return view;
@@ -49,8 +49,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        loginFragmentListener.loginCommand(textEmail.getText().toString(),
-                textPassword.getText().toString());
+        loginFragmentListener.loginCommand(textEmail.getText().toString().trim(),
+                textPassword.getText().toString().trim());
     }
 
     public interface LoginFragmentListener{

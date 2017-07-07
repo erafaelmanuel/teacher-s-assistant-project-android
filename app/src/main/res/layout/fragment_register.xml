@@ -1,57 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/fragment_register_text_firstname"
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/fragment_register_fname_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/fragment_register_text_firstname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:hint="@string/fragment_register_text_firstname"
+            android:inputType="textPersonName" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/fragment_register_lname_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:hint="@string/fragment_register_text_firstname"/>
+        android:layout_below="@id/fragment_register_fname_layout">
 
-    <EditText
-        android:id="@+id/fragment_register_text_lastname"
+        <EditText
+            android:id="@+id/fragment_register_text_lastname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:hint="@string/fragment_register_text_lastname"
+            android:inputType="textPersonName" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/fragment_register_email_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/fragment_register_text_firstname"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:hint="@string/fragment_register_text_lastname"/>
+        android:layout_below="@id/fragment_register_lname_layout">
 
-    <EditText
-        android:id="@+id/fragment_register_text_email"
+        <EditText
+            android:id="@+id/fragment_register_text_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:hint="@string/fragment_register_button_email"
+            android:inputType="textEmailAddress" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/fragment_register_password_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/fragment_register_text_lastname"
-        android:inputType="textEmailAddress"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:hint="@string/fragment_register_button_email"/>
+        android:layout_below="@id/fragment_register_email_layout">
 
-    <EditText
-        android:id="@+id/fragment_register_text_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/fragment_register_text_email"
-        android:inputType="textPassword"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:hint="@string/fragment_register_text_password"/>
+        <EditText
+            android:id="@+id/fragment_register_text_password"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            android:hint="@string/fragment_register_text_password"
+            android:inputType="textPassword" />
+    </android.support.design.widget.TextInputLayout>
+
 
     <Button
         android:id="@+id/fragment_register_button_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/fragment_register_text_password"
-        android:layout_marginTop="20dp"
+        android:layout_below="@id/fragment_register_password_layout"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:text="@string/fragment_register_button_register" />
+        android:layout_marginTop="70dp"
+        android:height="60dp"
+        android:background="@color/colorPrimaryDark"
+        android:text="@string/fragment_register_button_register"
+        android:textColor="@color/colorWhite" />
+
+    <Button
+        android:id="@+id/fragment_register_button_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/fragment_register_button_register"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="10dp"
+        android:height="60dp"
+        android:background="@color/colorGray"
+        android:text="@string/fragment_register_button_cancel"
+        android:textColor="@color/colorWhite" />
 
 </RelativeLayout>
