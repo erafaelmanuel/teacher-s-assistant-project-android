@@ -64,28 +64,28 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     public boolean isWidgetInputValid(){
         boolean isValid = true;
         if(textFirstName.getText().toString().trim().equals("")){
-            textInputLayoutFirstName.setError("Please enter your first name");
+            textInputLayoutFirstName.setError(getString(R.string.message_no_firstname_error));
             isValid = false;
         }else {
             textInputLayoutFirstName.setErrorEnabled(false);
             }
         if(textLastName.getText().toString().trim().equals("")){
-            textInputLayoutLastName.setError("Please enter your last name");
+            textInputLayoutLastName.setError(getString(R.string.message_no_lastname_error));
             isValid = false;
         }else {
             textInputLayoutLastName.setErrorEnabled(false);
         }
         if(textEmail.getText().toString().trim().equals("")){
-            textInputLayoutEmail.setError("Please enter your email name");
+            textInputLayoutEmail.setError(getString(R.string.message_no_email_error));
             isValid = false;
         }else {
             textInputLayoutEmail.setErrorEnabled(false);
         }
         if(textPassword.getText().toString().trim().equals("")){
-            textInputLayoutPassword.setError("Please enter your password name");
+            textInputLayoutPassword.setError(getString(R.string.message_no_password_error));
             isValid = false;
         }else if(textPassword.getText().toString().trim().length() < 8){
-            textInputLayoutPassword.setError("Minimum of 8 character");
+            textInputLayoutPassword.setError(getString(R.string.message_minimun_char_8));
             isValid = false;
         }else {
             textInputLayoutPassword.setErrorEnabled(false);
@@ -121,12 +121,12 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
             attribute.put("lastname", textLastName.getText().toString().trim());
             attribute.put("email", textEmail.getText().toString().trim());
             attribute.put("password", textPassword.getText().toString().trim());
-            registerFragmentListener.registerCommand(attribute);
+            registerFragmentListener.doRegister(attribute);
         }
     }
 
     public void clickCancel(){
-        registerFragmentListener.registerCancel();
+        registerFragmentListener.doCancel();
     }
 
     @Override
@@ -135,9 +135,11 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
             case R.id.fragment_register_button_register :
                 clickRegister();
                 break;
+
             case R.id.fragment_register_button_cancel :
                 clickCancel();;
                 break;
+
             default:
                 break;
         }
@@ -145,7 +147,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener{
     }
 
     public interface RegisterFragmentListener{
-        public void registerCommand(HashMap attribute);
-        public void registerCancel();
+        public void doRegister(HashMap attribute);
+        public void doCancel();
     }
 }

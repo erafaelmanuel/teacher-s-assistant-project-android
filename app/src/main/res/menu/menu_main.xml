@@ -3,18 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/thisisjustfor"
+        android:id="@+id/menu_item_logout"
         android:orderInCategory="100"
-        app:showAsAction="never"
-        android:title="Fuck">
-
-    </item>
-
-    <item
-        android:id="@+id/thisisjustfor1"
-        android:orderInCategory="100"
-        app:showAsAction="never"
-        android:title="You">
+        android:title="Logout"
+        app:showAsAction="never">
 
     </item>
 </menu>

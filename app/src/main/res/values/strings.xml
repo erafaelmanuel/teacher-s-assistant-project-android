@@ -13,4 +13,9 @@
     <string name="fragment_register_button_register">Register</string>
     <string name="fragment_register_button_cancel">Cancel</string>
     <string name="fragment_login_button_signup">Sign Up</string>
+    <string name="message_no_email_error">Please enter your email</string>
+    <string name="message_no_password_error">Please enter your password</string>
+    <string name="message_no_firstname_error">Please enter your first name</string>
+    <string name="message_no_lastname_error">Please enter your last name</string>
+    <string name="message_minimun_char_8">Minimun is 8 character</string>
 </resources>

@@ -24,7 +24,7 @@ public class RegisterActivity extends AppCompatActivity
     }
 
     @Override
-    public void registerCommand(HashMap attribute) {
+    public void doRegister(HashMap attribute) {
         Teacher teacher = new Teacher();
         teacher.setFirstName((String) attribute.get("firstname"));
         teacher.setLastName((String) attribute.get("lastname"));
@@ -32,25 +32,26 @@ public class RegisterActivity extends AppCompatActivity
         teacher.setPassword((String) attribute.get("password"));
 
         teacherDatabaseHelper.addTeacher(teacher);
-        saveUserDetail(teacher.getEmail(), teacher.getPassword());
-        goToNextActiviy(null, LoginActivity.class);
+        saveTeacherSharedPreference(teacher.getEmail(), teacher.getPassword());
+        activityStart(null, LoginActivity.class);
         finish();
     }
 
     @Override
-    public void registerCancel() {
+    public void doCancel() {
         finish();
     }
 
-    public void saveUserDetail(final String email, final String password){
-        SharedPreferences sharedPreferences = getSharedPreferences("cmUserLogin", Context.MODE_PRIVATE);
+    public void saveTeacherSharedPreference(final String email, final String password){
+        SharedPreferences sharedPreferences =
+                getSharedPreferences("cmUserLogin", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("cemail", email);
         editor.putString("cpassword", password);
         editor.apply();
     }
 
-    public void goToNextActiviy(Teacher intentExtra, Class activityClass){
+    public void activityStart(Teacher intentExtra, Class activityClass){
         Intent intent = new Intent(this, activityClass);
         intent.putExtra("teacher", intentExtra);
         startActivity(intent);

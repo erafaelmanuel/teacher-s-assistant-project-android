@@ -33,8 +33,10 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
         textPassword = (EditText) customView.findViewById(R.id.fragment_login_text_password);
         buttonLogin = (Button) customView.findViewById(R.id.fragment_login_button_login);
         buttonSignUp = (Button) customView.findViewById(R.id.fragment_login_button_signup);
-        textInputLayoutEmail = (TextInputLayout) customView.findViewById(R.id.fragment_login_email_layout);
-        textInputLayoutPassword = (TextInputLayout) customView.findViewById(R.id.fragment_login_password_layout);
+        textInputLayoutEmail =
+                (TextInputLayout) customView.findViewById(R.id.fragment_login_email_layout);
+        textInputLayoutPassword =
+                (TextInputLayout) customView.findViewById(R.id.fragment_login_password_layout);
 
         buttonLogin.setOnClickListener(this);
         buttonSignUp.setOnClickListener(this);
@@ -42,12 +44,12 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+            @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
         View view = inflater.inflate(R.layout.fragment_login, container, false);
         initializeWidget(view);
-
         return view;
     }
 
@@ -63,13 +65,13 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     public boolean isWidgetInputIsValid(){
         boolean isValid = true;
         if(textEmail.getText().toString().trim().equals("")){
-            textInputLayoutEmail.setError("Please enter your email name");
+            textInputLayoutEmail.setError(getString(R.string.message_no_email_error));
             isValid = false;
         }else {
             textInputLayoutEmail.setErrorEnabled(false);
         }
         if(textPassword.getText().toString().trim().equals("")){
-            textInputLayoutPassword.setError("Please enter your password name");
+            textInputLayoutPassword.setError(getString(R.string.message_no_password_error));
             isValid = false;
         }else {
             textInputLayoutPassword.setErrorEnabled(false);
@@ -94,9 +96,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             case R.id.fragment_login_button_login :
                 logInClick();
                 break;
+
             case R.id.fragment_login_button_signup :
                 signUpClick();
                 break;
+
             default:
                 break;
         }
