@@ -9,13 +9,15 @@ import android.os.Bundle;
 import com.remswork.classmanager.fragment.RegisterFragment;
 import com.remswork.classmanager.helper.dao.TeacherDatabaseHelper;
 import com.remswork.classmanager.model.Teacher;
+import com.remswork.classmanager.service.TeacherService;
+import com.remswork.classmanager.service.impl.TeacherServiceImpl;
 
 import java.util.HashMap;
 
 public class RegisterActivity extends AppCompatActivity
         implements RegisterFragment.RegisterFragmentListener{
 
-    private TeacherDatabaseHelper teacherDatabaseHelper = new TeacherDatabaseHelper(this);
+    private TeacherService teacherService = new TeacherServiceImpl(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +33,7 @@ public class RegisterActivity extends AppCompatActivity
         teacher.setEmail((String) attribute.get("email"));
         teacher.setPassword((String) attribute.get("password"));
 
-        teacherDatabaseHelper.addTeacher(teacher);
+        teacherService.addTeacher(teacher);
         saveTeacherSharedPreference(teacher.getEmail(), teacher.getPassword());
         activityStart(null, LoginActivity.class);
         finish();

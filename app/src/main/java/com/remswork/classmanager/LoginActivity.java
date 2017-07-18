@@ -13,8 +13,11 @@ import com.remswork.classmanager.fragment.LoginFragment;
 import com.remswork.classmanager.helper.dao.DatabaseHelper;
 import com.remswork.classmanager.helper.dao.TeacherDatabaseHelper;
 import com.remswork.classmanager.model.Teacher;
+import com.remswork.classmanager.service.TeacherService;
+import com.remswork.classmanager.service.impl.TeacherServiceImpl;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Rafael on 7/4/2017.
@@ -24,14 +27,12 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment
         .LoginFragmentListener{
 
     private static final String TAG = "ClassManager";
-
-    private DatabaseHelper databaseHelper = new TeacherDatabaseHelper(this);
+    private TeacherService teacherService = new TeacherServiceImpl(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
     }
 
     @Override
@@ -45,11 +46,11 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment
     @Override
     public void doLogIn(final String email, final String password) {
 
-        if((boolean) ((TeacherDatabaseHelper) databaseHelper)
+        if((boolean) teacherService
                 .getTeacherAuthenticate(email, password).get("isSuccess")) {
 
             saveTeacherSharedPreference(email, password);
-            activityStart((Teacher) ((TeacherDatabaseHelper) databaseHelper)
+            activityStart((Teacher) teacherService
                     .getTeacherAuthenticate(email, password).get("getTeacher"),
                     MainActivity.class);
         }else
@@ -62,7 +63,6 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment
     }
 
     public HashMap loadUserDetail(){
-
         HashMap map = new HashMap();
         map.put("isSuccess", false);
 
@@ -73,13 +73,12 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment
 
         if (cemail != null && !cemail.equals("")) {
             if (cpassword != null && !cpassword.equals("")) {
-                HashMap result = ((TeacherDatabaseHelper) databaseHelper)
+                HashMap result = teacherService
                         .getTeacherAuthenticate(cemail, cpassword);
                 if ((boolean) result.get("isSuccess"))
                     return result;
             }
         }
-
         return map;
     }
 

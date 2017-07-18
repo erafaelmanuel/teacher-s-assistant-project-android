@@ -71,7 +71,7 @@ public class TeacherDatabaseHelper extends DatabaseHelper {
         List<Teacher> listOfTeacher = new ArrayList<Teacher>();
         try{
             SQLiteDatabase db = getWritableDatabase();
-            String query = String.format("SELECT * FROM %s WHERE 1", TABLE_NAME);
+            String query = String.format("SELECT * FROM %s WHERE 1;", TABLE_NAME);
             Cursor cursor = db.rawQuery(query, null);
 
             while(cursor.moveToNext()){
@@ -95,7 +95,7 @@ public class TeacherDatabaseHelper extends DatabaseHelper {
         Teacher teacher = new Teacher();
         try{
             SQLiteDatabase db = getWritableDatabase();
-            String query = String.format("SELECT * FROM %s WHERE %s = ?", TABLE_NAME, COL_1);
+            String query = String.format("SELECT * FROM %s WHERE %s = ?;", TABLE_NAME, COL_1);
             Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(id)});
 
             while (cursor.moveToNext()){
@@ -116,7 +116,7 @@ public class TeacherDatabaseHelper extends DatabaseHelper {
         Teacher teacher = new Teacher();
         try{
             SQLiteDatabase db = getWritableDatabase();
-            String query = String.format("SELECT * FROM %s WHERE %s = ?", TABLE_NAME, COL_4);
+            String query = String.format("SELECT * FROM %s WHERE %s = ?;", TABLE_NAME, COL_4);
             Cursor cursor = db.rawQuery(query, new String[]{email});
 
             while (cursor.moveToNext()){
@@ -139,7 +139,8 @@ public class TeacherDatabaseHelper extends DatabaseHelper {
         try{
             Teacher teacher = new Teacher();
             SQLiteDatabase db = getWritableDatabase();
-            String query = String.format("SELECT * FROM %s WHERE %s = ? AND %s = ? LIMIT 1", TABLE_NAME, COL_4, COL_5);
+            String query = String.format("SELECT * FROM %s WHERE %s = ? AND %s = ? LIMIT 1;",
+                    TABLE_NAME, COL_4, COL_5);
             Cursor cursor = db.rawQuery(query, new String[]{email, password});
 
             if(cursor.moveToNext()){
@@ -166,10 +167,32 @@ public class TeacherDatabaseHelper extends DatabaseHelper {
 
     }
 
+    public boolean updateTeacherById(final int id, final Teacher newTeacher){
+        try{
+            String whereClause = COL_1 + " " + id;
+            SQLiteDatabase db = getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(COL_1, newTeacher.getId());
+            contentValues.put(COL_2, newTeacher.getFirstName());
+            contentValues.put(COL_3, newTeacher.getLastName());
+            contentValues.put(COL_4, newTeacher.getEmail());
+            contentValues.put(COL_5, newTeacher.getPassword());
+
+            if(db.update(TABLE_NAME, contentValues, whereClause, null) > 0)
+                return true;
+            else
+                throw new Exception();
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public boolean deleteTeacherById(int id){
         try{
             SQLiteDatabase db = getWritableDatabase();
-            db.delete(TABLE_NAME, COL_1 +" = ?",new String[]{String.valueOf(id)});
+            db.delete(TABLE_NAME, COL_1 +" = ?", new String[]{String.valueOf(id)});
             return true;
         }catch (Exception e){
             e.printStackTrace();

@@ -22,7 +22,7 @@ public class SubjectDatabaseHelper extends DatabaseHelper {
 
     private static final String TABLE_NAME = "tbl_subject";
     private static final String COL_1 = "id";
-    private static final String COL_2 = "title";
+    private static final String COL_2 = "name";
     private static final String COL_3 = "code";
     private static final String COL_4 = "desc";
     private static final String COL_5 = "unit";
@@ -34,7 +34,6 @@ public class SubjectDatabaseHelper extends DatabaseHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        super.onCreate(db);
         String query = String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "%S TEXT,%S TEXT, %s TEXT, %s TEXT, %s TEXT);",
                 TABLE_NAME, COL_1, COL_2, COL_3, COL_4, COL_5, COL_6);
@@ -43,9 +42,27 @@ public class SubjectDatabaseHelper extends DatabaseHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        super.onUpgrade(db, oldVersion, newVersion);
         db.execSQL("DROP TABLE IF EXISTS '"+ TABLE_NAME+"'");
         onCreate(db);
+    }
+
+    public boolean addSubject(Subject subject){
+        try{
+            SQLiteDatabase db = getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(COL_1, subject.getId());
+            contentValues.put(COL_2, subject.getName());
+            contentValues.put(COL_3, subject.getCode());
+            contentValues.put(COL_4, subject.getDesc());
+            contentValues.put(COL_5, subject.getUnit());
+            contentValues.put(COL_6, subject.getImageIcon());
+
+            db.insert(TABLE_NAME, null, contentValues);
+            return true;
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public Subject getSubjectById(final int id){
@@ -56,7 +73,7 @@ public class SubjectDatabaseHelper extends DatabaseHelper {
             Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(id)});
             if(cursor.moveToNext()){
                 subject.setId(cursor.getInt(0));
-                subject.setTitle(cursor.getString(1));
+                subject.setName(cursor.getString(1));
                 subject.setCode(cursor.getString(2));
                 subject.setDesc(cursor.getString(3));
                 subject.setUnit(cursor.getInt(4));
@@ -70,37 +87,15 @@ public class SubjectDatabaseHelper extends DatabaseHelper {
         return null;
     }
 
-    public Subject getSubjectByTitle(final String title){
+    public Subject getSubjectByName(final String name){
         Subject subject = new Subject();
         String query = String.format("SELECT * FROM %s WHERE %s = ? LIMIT 1;", TABLE_NAME, COL_2);
         try{
             SQLiteDatabase db = getWritableDatabase();
-            Cursor cursor = db.rawQuery(query, new String[]{title});
+            Cursor cursor = db.rawQuery(query, new String[]{name});
             if(cursor.moveToNext()){
                 subject.setId(cursor.getInt(0));
-                subject.setTitle(cursor.getString(1));
-                subject.setCode(cursor.getString(2));
-                subject.setDesc(cursor.getString(3));
-                subject.setUnit(cursor.getInt(4));
-                subject.setImageIcon(cursor.getInt(5));
-                return subject;
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-            return null;
-        }
-        return null;
-    }
-
-    public Subject getSubjectByCode(final String code){
-        Subject subject = new Subject();
-        String query = String.format("SELECT * FROM %s WHERE %s = ? LIMIT 1;", TABLE_NAME, COL_3);
-        try{
-            SQLiteDatabase db = getWritableDatabase();
-            Cursor cursor = db.rawQuery(query, new String[]{code});
-            if(cursor.moveToNext()){
-                subject.setId(cursor.getInt(0));
-                subject.setTitle(cursor.getString(1));
+                subject.setName(cursor.getString(1));
                 subject.setCode(cursor.getString(2));
                 subject.setDesc(cursor.getString(3));
                 subject.setUnit(cursor.getInt(4));
@@ -123,7 +118,7 @@ public class SubjectDatabaseHelper extends DatabaseHelper {
            while(cursor.moveToNext()){
                 Subject subject = new Subject();
                 subject.setId(cursor.getInt(0));
-                subject.setTitle(cursor.getString(1));
+                subject.setName(cursor.getString(1));
                 subject.setCode(cursor.getString(2));
                 subject.setDesc(cursor.getString(3));
                 subject.setUnit(cursor.getInt(4));
@@ -137,21 +132,34 @@ public class SubjectDatabaseHelper extends DatabaseHelper {
         }
     }
 
-    public boolean addSubject(Subject subject){
+    public boolean updateSubjectById(final int id, final Subject newSubject){
         try{
             SQLiteDatabase db = getWritableDatabase();
             ContentValues contentValues = new ContentValues();
+            contentValues.put(COL_1, newSubject.getId());
+            contentValues.put(COL_2, newSubject.getName());
+            contentValues.put(COL_3, newSubject.getCode());
+            contentValues.put(COL_4, newSubject.getDesc());
+            contentValues.put(COL_5, newSubject.getUnit());
+            contentValues.put(COL_6, newSubject.getImageIcon());
 
-            contentValues.put(COL_1, subject.getId());
-            contentValues.put(COL_2, subject.getTitle());
-            contentValues.put(COL_3, subject.getCode());
-            contentValues.put(COL_4, subject.getDesc());
-            contentValues.put(COL_5, subject.getUnit());
-            contentValues.put(COL_6, subject.getImageIcon());
+            if(db.update(TABLE_NAME, contentValues, COL_1 + " = " + id, null) > 0)
+                return true;
+            else
+                throw new Exception();
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
 
-            db.insert(TABLE_NAME, null, contentValues);
+    public boolean deleteSubjectById(final int id){
+        try{
+            String whereClause = String.format("%s = ?", COL_1);
+            SQLiteDatabase db = getWritableDatabase();
+            db.delete(TABLE_NAME, whereClause, new String[]{String.valueOf(id)});
             return true;
-        }catch(Exception e){
+        }catch (Exception e){
             e.printStackTrace();
             return false;
         }

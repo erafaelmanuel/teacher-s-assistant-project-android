@@ -1,67 +1,26 @@
 package com.remswork.classmanager.model;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import static android.R.attr.name;
-import static android.R.attr.targetId;
-
 /**
  * Created by Rafael on 7/5/2017.
  */
 
-public class Subject implements Parcelable{
+public class Subject {
 
     private int id;
-    private String title;
+    private String name;
     private String code;
     private String desc;
     private int unit;
     private int imageIcon;
 
-    public static final Creator<Subject> CREATOR = new Creator<Subject>() {
-        @Override
-        public Subject createFromParcel(Parcel source) {
-            return new Subject(source);
-        }
-
-        @Override
-        public Subject[] newArray(int size) {
-            return new Subject[size];
-        }
-    };
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id);
-        dest.writeString(title);
-        dest.writeString(code);
-        dest.writeString(desc);
-        dest.writeInt(unit);
-        dest.writeInt(imageIcon);
-    }
-
     public Subject(){
         super();
     }
 
-    public Subject(Parcel source){
-        id = source.readInt();
-        title = source.readString();
-        code = source.readString();
-        desc = source.readString();
-        unit = source.readInt();
-        imageIcon = source.readInt();
-    }
-
-    public Subject(int id, String title, String code, String desc, int unit, int imageIcon) {
+    public Subject(int id, String name, String code, String desc, int unit, int imageIcon) {
+        this();
         this.id = id;
-        this.title = title;
+        this.name = name;
         this.code = code;
         this.desc = desc;
         this.unit = unit;
@@ -76,12 +35,12 @@ public class Subject implements Parcelable{
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getCode() {
@@ -120,7 +79,7 @@ public class Subject implements Parcelable{
     public String toString() {
         return "Subject{" +
                 "id=" + id +
-                ", title='" + title + '\'' +
+                ", name='" + name + '\'' +
                 ", code='" + code + '\'' +
                 ", desc='" + desc + '\'' +
                 ", unit=" + unit +
