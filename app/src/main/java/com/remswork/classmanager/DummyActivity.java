@@ -14,6 +14,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.remswork.classmanager.helper.dao.SectionDatabaseHelper;
+import com.remswork.classmanager.helper.dao.StudentDatabaseHelper;
+import com.remswork.classmanager.helper.dao.SubjectDatabaseHelper;
+import com.remswork.classmanager.helper.dao.TeacherDatabaseHelper;
+import com.remswork.classmanager.helper.service.SectionService;
+import com.remswork.classmanager.helper.service.SectionStudentListService;
+import com.remswork.classmanager.helper.service.StudentService;
+import com.remswork.classmanager.helper.service.TeacherService;
+import com.remswork.classmanager.helper.service.impl.SectionServiceImpl;
+import com.remswork.classmanager.helper.service.impl.SectionStudentListServiceImpl;
+import com.remswork.classmanager.helper.service.impl.StudentServiceImpl;
+import com.remswork.classmanager.helper.service.impl.TeacherServiceImpl;
+import com.remswork.classmanager.model.Section;
+import com.remswork.classmanager.model.Student;
+import com.remswork.classmanager.model.Subject;
 import com.remswork.classmanager.model.Teacher;
 
 /**
@@ -52,8 +67,49 @@ public class DummyActivity extends AppCompatActivity {
     }
 
     public void onClick(View view) {
-        saveUserDetail("", "");
-        goToNextActiviy(null, LoginActivity.class);
+        //SubjectDatabaseHelper subjectDatabaseHelper = new SubjectDatabaseHelper(this);
+        //subjectDatabaseHelper.upgradeTable(true);
+        //subjectDatabaseHelper.deleteSubjectById(1);
+      // Toast.makeText(this, subjectDatabaseHelper.addSubject(new Subject(1 , "name","code","desc", 3, 1)) + "", Toast.LENGTH_LONG)
+       //Toast.makeText(this, subjectDatabaseHelper.getAllSubject().size() + "", Toast.LENGTH_LONG)
+        StudentDatabaseHelper helper  = new StudentDatabaseHelper(this);
+        //helper.upgradeTable(true);
+
+        //helper.updateStudentById(1, new Student(1, "aris","beta","coconut", 1, "m", 1,-1));
+//        helper.deleteStudentById(1);
+        //Toast.makeText(this, helper.addStudent(new Student(1, "a","b","c", 1, "m", 1,-1)) + "", Toast.LENGTH_LONG)
+//        Toast.makeText(this, helper.getStudentsByLastName("beta").size() + "", Toast.LENGTH_LONG)
+
+        TeacherDatabaseHelper helper1 = new TeacherDatabaseHelper(this);
+
+//        Toast.makeText(this, helper1.getTeacherByEmail("erafaelmanuel@gmail.com") + "", Toast.LENGTH_LONG)
+
+//        StudentService service = new StudentServiceImpl(this);
+//        service.addStudent(new Student(2, "no one","beta","coconut", 1, "m", 1,-1));
+//        Toast.makeText(this, service.getAllStudent().size() + "", Toast.LENGTH_LONG)
+
+        //SectionDatabaseHelper sectionDatabaseHelper = new SectionDatabaseHelper(this);
+        //sectionDatabaseHelper.upgradeTable(true);
+        SectionStudentListService sectionStudentListService = new SectionStudentListServiceImpl(this);
+        StudentService studentService = new StudentServiceImpl(this);
+        SectionService sectionService = new SectionServiceImpl(this);
+
+        //Toast.makeText(this, sectionDatabaseHelper.addSection(new Section(1,"name",1995, "no")) + "", Toast.LENGTH_LONG);
+        //Toast.makeText(this, sectionDatabaseHelper.getSectionById(1) + "", Toast.LENGTH_LONG)
+        //Toast.makeText(this, sectionDatabaseHelper.updateSectionById(1, new Section(1,"rafael",1996, "no")) + "", Toast.LENGTH_LONG)
+//        Toast.makeText(this, sectionDatabaseHelper.deleteSectionById(1) + "", Toast.LENGTH_LONG)
+        //sectionStudentListService.addStudentId(1, 2);
+        sectionStudentListService.deleteAllStudentFromListBySectionId(1);
+        Toast.makeText(this, sectionService.getSectionById(1) + "", Toast.LENGTH_LONG)
+        //Toast.makeText(this, studentService.getAllStudent().get(0) + "", Toast.LENGTH_LONG)
+//        TeacherService teacherService = new TeacherServiceImpl(this);
+//        teacherService.addTeacher(new Teacher(3, "r","m","e","p"));
+//        Toast.makeText(this, teacherService.getListOfTeacher().size() + "", Toast.LENGTH_LONG)
+        .show();
+        //saveUserDetail("", "");
+        //goToNextActiviy(null, LoginActivity.class);
+
+
     }
 
     public void saveUserDetail(final String username, final String password){

@@ -12,7 +12,7 @@ public class Student {
     private String middleName;
     private int age;
     private String gender;
-    private String year;
+    private int year;
     private int image;
 
     public Student(){
@@ -20,7 +20,7 @@ public class Student {
     }
 
     public Student(int id, String firstName, String lastName, String middleName, int age,
-                   String gender, String year, int image) {
+                   String gender, int year, int image) {
         this();
         this.id = id;
         this.firstName = firstName;
@@ -64,14 +64,6 @@ public class Student {
         this.middleName = middleName;
     }
 
-    public String getYear() {
-        return year;
-    }
-
-    public void setYear(String year) {
-        this.year = year;
-    }
-
     public int getAge() {
         return age;
     }
@@ -88,11 +80,11 @@ public class Student {
         this.gender = gender;
     }
 
-    public String getYearAndSection() {
+    public int getYear() {
         return year;
     }
 
-    public void setYearAndSection(String year) {
+    public void setYear(int year) {
         this.year = year;
     }
 
@@ -113,7 +105,7 @@ public class Student {
                 ", middleName='" + middleName + '\'' +
                 ", age=" + age +
                 ", gender='" + gender + '\'' +
-                ", year='" + year + '\'' +
+                ", year=" + year +
                 ", image=" + image +
                 '}';
     }

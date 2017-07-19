@@ -4,21 +4,21 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
+import com.remswork.classmanager.exception.ClazzDatabaseHelperException;
+import com.remswork.classmanager.helper.service.SectionService;
+import com.remswork.classmanager.helper.service.SubjectService;
+import com.remswork.classmanager.helper.service.TeacherService;
+import com.remswork.classmanager.helper.service.impl.SectionServiceImpl;
+import com.remswork.classmanager.helper.service.impl.SubjectServiceImpl;
+import com.remswork.classmanager.helper.service.impl.TeacherServiceImpl;
 import com.remswork.classmanager.model.Clazz;
 import com.remswork.classmanager.model.Section;
 import com.remswork.classmanager.model.Subject;
 import com.remswork.classmanager.model.Teacher;
-import com.remswork.classmanager.service.SubjectService;
-import com.remswork.classmanager.service.TeacherService;
-import com.remswork.classmanager.service.impl.SubjectServiceImpl;
-import com.remswork.classmanager.service.impl.TeacherServiceImpl;
-
-import static com.remswork.classmanager.helper.dao.TeacherDatabaseHelper.TABLE_NAME;
 
 /**
- * Created by Rem-sama on 7/18/2017.
+ * Created by Rafael on 7/18/2017.
  */
 
 public class ClazzDatabaseHelper extends DatabaseHelper {
@@ -66,9 +66,11 @@ public class ClazzDatabaseHelper extends DatabaseHelper {
             contentValues.put(COL_3, clazz.getId());
             contentValues.put(COL_4, clazz.getId());
 
-            db.insert(TABLE_NAME, null, contentValues);
-            return true;
-        }catch (Exception e){
+            if(db.insert(TABLE_NAME, null, contentValues) != -1)
+                return true;
+            else
+                throw new ClazzDatabaseHelperException("Class can't be added");
+        }catch (ClazzDatabaseHelperException e){
             e.printStackTrace();
             return false;
         }
@@ -93,11 +95,12 @@ public class ClazzDatabaseHelper extends DatabaseHelper {
                 clazz.setTeacher(teacher);
                 clazz.setSubject(subject);
                 clazz.setSection(section);
+                cursor.close();
                 return clazz;
             }else
-                throw new Exception();
+                throw new ClazzDatabaseHelperException("No class found with ID : " + id);
 
-        }catch (Exception e){
+        }catch (ClazzDatabaseHelperException e){
             e.printStackTrace();
             return null;
         }

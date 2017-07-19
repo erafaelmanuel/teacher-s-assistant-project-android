@@ -1,4 +1,4 @@
-package com.remswork.classmanager.service;
+package com.remswork.classmanager.helper.service;
 
 import com.remswork.classmanager.model.Subject;
 

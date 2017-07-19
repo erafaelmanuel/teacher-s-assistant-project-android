@@ -1,10 +1,10 @@
-package com.remswork.classmanager.service.impl;
+package com.remswork.classmanager.helper.service.impl;
 
 import android.content.Context;
 
 import com.remswork.classmanager.helper.dao.TeacherDatabaseHelper;
+import com.remswork.classmanager.helper.service.TeacherService;
 import com.remswork.classmanager.model.Teacher;
-import com.remswork.classmanager.service.TeacherService;
 
 import java.util.HashMap;
 import java.util.List;

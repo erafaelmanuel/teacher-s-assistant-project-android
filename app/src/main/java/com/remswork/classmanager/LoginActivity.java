@@ -5,19 +5,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.remswork.classmanager.fragment.LoginFragment;
-import com.remswork.classmanager.helper.dao.DatabaseHelper;
-import com.remswork.classmanager.helper.dao.TeacherDatabaseHelper;
 import com.remswork.classmanager.model.Teacher;
-import com.remswork.classmanager.service.TeacherService;
-import com.remswork.classmanager.service.impl.TeacherServiceImpl;
+import com.remswork.classmanager.helper.service.TeacherService;
+import com.remswork.classmanager.helper.service.impl.TeacherServiceImpl;
 
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by Rafael on 7/4/2017.
@@ -27,12 +22,13 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment
         .LoginFragmentListener{
 
     private static final String TAG = "ClassManager";
-    private TeacherService teacherService = new TeacherServiceImpl(this);
+    private TeacherService teacherService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        teacherService = new TeacherServiceImpl(this);
     }
 
     @Override
@@ -45,7 +41,6 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment
 
     @Override
     public void doLogIn(final String email, final String password) {
-
         if((boolean) teacherService
                 .getTeacherAuthenticate(email, password).get("isSuccess")) {
 

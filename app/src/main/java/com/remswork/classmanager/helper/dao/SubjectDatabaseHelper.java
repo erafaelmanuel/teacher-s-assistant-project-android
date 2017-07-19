@@ -10,9 +10,6 @@ import com.remswork.classmanager.model.Subject;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.R.attr.id;
-import static com.remswork.classmanager.helper.dao.TeacherDatabaseHelper.TABLE_NAME;
-
 /**
  * Created by Rafael on 7/9/2017.
  */
@@ -30,12 +27,13 @@ public class SubjectDatabaseHelper extends DatabaseHelper {
 
     public SubjectDatabaseHelper(Context context){
         super(context, DATABASE_NAME, VERSION);
+        onCreate(getWritableDatabase());
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String query = String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "%S TEXT,%S TEXT, %s TEXT, %s TEXT, %s TEXT);",
+        String query = String.format("CREATE TABLE IF NOT EXISTS '%s' (%s INTEGER PRIMARY KEY " +
+                "AUTOINCREMENT, %S TEXT,%S TEXT, %s TEXT, %s INTEGER, %s INTEGER);",
                 TABLE_NAME, COL_1, COL_2, COL_3, COL_4, COL_5, COL_6);
         db.execSQL(query);
     }
@@ -61,6 +59,7 @@ public class SubjectDatabaseHelper extends DatabaseHelper {
             return true;
         }catch(Exception e){
             e.printStackTrace();
+            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
             return false;
         }
     }
@@ -78,13 +77,15 @@ public class SubjectDatabaseHelper extends DatabaseHelper {
                 subject.setDesc(cursor.getString(3));
                 subject.setUnit(cursor.getInt(4));
                 subject.setImageIcon(cursor.getInt(5));
+                cursor.close();
                 return subject;
-            }
+            }else
+                throw new Exception();
         }catch(Exception e){
             e.printStackTrace();
+            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
             return null;
         }
-        return null;
     }
 
     public Subject getSubjectByName(final String name){
@@ -92,7 +93,8 @@ public class SubjectDatabaseHelper extends DatabaseHelper {
         String query = String.format("SELECT * FROM %s WHERE %s = ? LIMIT 1;", TABLE_NAME, COL_2);
         try{
             SQLiteDatabase db = getWritableDatabase();
-            Cursor cursor = db.rawQuery(query, new String[]{name});
+            String[] args = new String[]{name};
+            Cursor cursor = db.rawQuery(query, args);
             if(cursor.moveToNext()){
                 subject.setId(cursor.getInt(0));
                 subject.setName(cursor.getString(1));
@@ -100,22 +102,24 @@ public class SubjectDatabaseHelper extends DatabaseHelper {
                 subject.setDesc(cursor.getString(3));
                 subject.setUnit(cursor.getInt(4));
                 subject.setImageIcon(cursor.getInt(5));
+                cursor.close();
                 return subject;
-            }
+            }else
+                throw new Exception();
         }catch(Exception e){
             e.printStackTrace();
+            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
             return null;
         }
-        return null;
     }
 
     public List<Subject> getAllSubject(){
         List<Subject> listOfSubject = new ArrayList<Subject>();
-        String query = String.format("SELECT * FROM %s;", TABLE_NAME);
+        String query = String.format("SELECT * FROM %s ;", TABLE_NAME);
         try{
             SQLiteDatabase db = getWritableDatabase();
             Cursor cursor = db.rawQuery(query, null);
-           while(cursor.moveToNext()){
+            while(cursor.moveToNext()){
                 Subject subject = new Subject();
                 subject.setId(cursor.getInt(0));
                 subject.setName(cursor.getString(1));
@@ -123,11 +127,13 @@ public class SubjectDatabaseHelper extends DatabaseHelper {
                 subject.setDesc(cursor.getString(3));
                 subject.setUnit(cursor.getInt(4));
                 subject.setImageIcon(cursor.getInt(5));
-               listOfSubject.add(subject);
+                listOfSubject.add(subject);
             }
+            cursor.close();
             return listOfSubject;
         }catch(Exception e){
             e.printStackTrace();
+            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
             return null;
         }
     }
@@ -161,6 +167,7 @@ public class SubjectDatabaseHelper extends DatabaseHelper {
             return true;
         }catch (Exception e){
             e.printStackTrace();
+            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
             return false;
         }
     }
