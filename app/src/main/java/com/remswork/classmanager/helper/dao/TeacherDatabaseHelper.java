@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 
 import com.remswork.classmanager.exception.TeacherDatabaseHelperException;
 import com.remswork.classmanager.model.Teacher;
@@ -54,13 +55,13 @@ public class TeacherDatabaseHelper extends DatabaseHelper {
             contentValues.put(COL_4, teacher.getEmail());
             contentValues.put(COL_5, teacher.getPassword());
 
-            if(db.insert(TABLE_NAME, null, contentValues) != -1)
+            if (db.insert(TABLE_NAME, null, contentValues) != -1)
                 return true;
             else
                 throw new TeacherDatabaseHelperException("Teacher can't be added");
         }catch (TeacherDatabaseHelperException e){
-            e.printStackTrace();
             onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
+            e.printStackTrace();
             return false;
         }
     }
@@ -71,24 +72,30 @@ public class TeacherDatabaseHelper extends DatabaseHelper {
             SQLiteDatabase db = getWritableDatabase();
             String query = String.format("SELECT * FROM %s WHERE 1;", TABLE_NAME);
             Cursor cursor = db.rawQuery(query, null);
-
-            if(cursor.getCount() > 0) {
-                while (cursor.moveToNext()) {
-                    Teacher teacher = new Teacher();
-                    teacher.setId(cursor.getInt(0));
-                    teacher.setFirstName(cursor.getString(1));
-                    teacher.setLastName(cursor.getString(2));
-                    teacher.setEmail(cursor.getString(3));
-                    teacher.setPassword(cursor.getString(4));
-                    listOfTeacher.add(teacher);
-                }
-                cursor.close();
-                return listOfTeacher;
-            }else
-                throw new TeacherDatabaseHelperException("No Teacher found");
+            try {
+                if (cursor.getCount() > 0) {
+                    while (cursor.moveToNext()) {
+                        Teacher teacher = new Teacher();
+                        teacher.setId(cursor.getInt(0));
+                        teacher.setFirstName(cursor.getString(1));
+                        teacher.setLastName(cursor.getString(2));
+                        teacher.setEmail(cursor.getString(3));
+                        teacher.setPassword(cursor.getString(4));
+                        listOfTeacher.add(teacher);
+                    }
+                    cursor.close();
+                    return listOfTeacher;
+                } else
+                    throw new TeacherDatabaseHelperException("No Teacher found");
+            }catch (RuntimeException  e){
+                throw new SQLiteException("Teacher table encountered unknown error");
+            }
+        }catch (SQLiteException e){
+            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
+            e.printStackTrace();
+            return listOfTeacher;
         }catch (TeacherDatabaseHelperException e){
             e.printStackTrace();
-            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
             return listOfTeacher;
         }
     }
@@ -100,21 +107,28 @@ public class TeacherDatabaseHelper extends DatabaseHelper {
             String query = String.format("SELECT * FROM %s WHERE %s = ?;", TABLE_NAME, COL_1);
             Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(id)});
 
-            if(cursor.getCount() > 0) {
-                while (cursor.moveToNext()) {
-                    teacher.setId(cursor.getInt(0));
-                    teacher.setFirstName(cursor.getString(1));
-                    teacher.setLastName(cursor.getString(2));
-                    teacher.setEmail(cursor.getString(3));
-                    teacher.setPassword(cursor.getString(4));
-                }
-                cursor.close();
-                return teacher;
-            }else
-                throw new TeacherDatabaseHelperException("No Teacher found with ID : " + id);
-        }catch(Exception e){
-            e.printStackTrace();
+            try {
+                if (cursor.getCount() > 0) {
+                    while (cursor.moveToNext()) {
+                        teacher.setId(cursor.getInt(0));
+                        teacher.setFirstName(cursor.getString(1));
+                        teacher.setLastName(cursor.getString(2));
+                        teacher.setEmail(cursor.getString(3));
+                        teacher.setPassword(cursor.getString(4));
+                    }
+                    cursor.close();
+                    return teacher;
+                } else
+                    throw new TeacherDatabaseHelperException("No Teacher found with ID : " + id);
+            }catch (RuntimeException e){
+                throw new SQLiteException("Teacher table encountered unknown error");
+            }
+        }catch (SQLiteException e){
             onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
+            e.printStackTrace();
+            return teacher;
+        }catch(TeacherDatabaseHelperException e){
+            e.printStackTrace();
             return teacher;
         }
     }
@@ -125,53 +139,68 @@ public class TeacherDatabaseHelper extends DatabaseHelper {
             SQLiteDatabase db = getWritableDatabase();
             String query = String.format("SELECT * FROM %s WHERE %s = ?;", TABLE_NAME, COL_4);
             Cursor cursor = db.rawQuery(query, new String[]{email});
-
-            while (cursor.moveToNext()){
-                teacher.setId(cursor.getInt(0));
-                teacher.setFirstName(cursor.getString(1));
-                teacher.setLastName(cursor.getString(2));
-                teacher.setEmail(cursor.getString(3));
-                teacher.setPassword(cursor.getString(4));
+            try {
+                if (cursor.getCount() > 0) {
+                    while (cursor.moveToNext()) {
+                        teacher.setId(cursor.getInt(0));
+                        teacher.setFirstName(cursor.getString(1));
+                        teacher.setLastName(cursor.getString(2));
+                        teacher.setEmail(cursor.getString(3));
+                        teacher.setPassword(cursor.getString(4));
+                    }
+                    cursor.close();
+                    return teacher;
+                } else
+                    throw new TeacherDatabaseHelperException(
+                            "No Teacher found with Email : " + email);
+            }catch (RuntimeException e){
+                throw new SQLiteException("Teacher table encountered unknown error");
             }
-            cursor.close();
-            return teacher;
-        }catch(Exception e){
-            e.printStackTrace();
+        }catch (SQLiteException e){
             onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
+            e.printStackTrace();
+            return teacher;
+        }catch(TeacherDatabaseHelperException e){
+            e.printStackTrace();
             return teacher;
         }
     }
 
     public HashMap<String, Object> getTeacherAuthenticate(String email, String password){
         HashMap<String, Object> map = new HashMap<String, Object>();
-
         try{
             Teacher teacher = new Teacher();
             SQLiteDatabase db = getWritableDatabase();
             String query = String.format("SELECT * FROM %s WHERE %s = ? AND %s = ? LIMIT 1;",
                     TABLE_NAME, COL_4, COL_5);
             Cursor cursor = db.rawQuery(query, new String[]{email, password});
+            try {
+                if (cursor.moveToNext()) {
+                    teacher.setId(cursor.getInt(0));
+                    teacher.setFirstName(cursor.getString(1));
+                    teacher.setLastName(cursor.getString(2));
+                    teacher.setEmail(cursor.getString(3));
+                    teacher.setPassword(cursor.getString(4));
 
-            if(cursor.moveToNext()){
-                teacher.setId(cursor.getInt(0));
-                teacher.setFirstName(cursor.getString(1));
-                teacher.setLastName(cursor.getString(2));
-                teacher.setEmail(cursor.getString(3));
-                teacher.setPassword(cursor.getString(4));
-
-                map.put("isSuccess", true);
-                map.put("getTeacher", teacher);
-                cursor.close();
-                return map;
-            }else
-                throw new TeacherDatabaseHelperException("Email or password fail to match");
+                    map.put("isSuccess", true);
+                    map.put("getTeacher", teacher);
+                    cursor.close();
+                    return map;
+                } else
+                    throw new TeacherDatabaseHelperException("Email or password fail to match");
+            }catch (RuntimeException e){
+                throw new SQLiteException("Teacher table encountered unknown error");
+            }
+        }catch (SQLiteException e){
+            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
+            e.printStackTrace();
+            map.put("isSuccess",false);
+            return  map ;
         }catch(TeacherDatabaseHelperException e){
             e.printStackTrace();
-            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
             map.put("isSuccess",false);
             return  map ;
         }
-
     }
 
     public boolean updateTeacherById(final int id, final Teacher newTeacher){
@@ -184,15 +213,20 @@ public class TeacherDatabaseHelper extends DatabaseHelper {
             contentValues.put(COL_3, newTeacher.getLastName());
             contentValues.put(COL_4, newTeacher.getEmail());
             contentValues.put(COL_5, newTeacher.getPassword());
-
-            if(db.update(TABLE_NAME, contentValues, whereClause, null) > 0)
-                return true;
-            else
-                throw new TeacherDatabaseHelperException("Failed to update Teacher");
-
+            try{
+                if(db.update(TABLE_NAME, contentValues, whereClause, null) > 0)
+                    return true;
+                else
+                    throw new TeacherDatabaseHelperException("Failed to update Teacher");
+            }catch (RuntimeException e){
+                throw new SQLiteException("Teacher table encountered unknown error");
+            }
+        }catch(SQLiteException e){
+            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
+            e.printStackTrace();
+            return false;
         }catch (TeacherDatabaseHelperException e){
             e.printStackTrace();
-            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
             return false;
         }
     }
@@ -200,13 +234,20 @@ public class TeacherDatabaseHelper extends DatabaseHelper {
     public boolean deleteTeacherById(int id){
         try{
             SQLiteDatabase db = getWritableDatabase();
-            if(db.delete(TABLE_NAME, COL_1 +" = ?", new String[]{String.valueOf(id)}) > 0)
-                return true;
-            else
-                throw new TeacherDatabaseHelperException("Failed to delete Teacher");
+            try {
+                if (db.delete(TABLE_NAME, COL_1 + " = ?", new String[]{String.valueOf(id)}) > 0)
+                    return true;
+                else
+                    throw new TeacherDatabaseHelperException("Failed to delete Teacher");
+            }catch (RuntimeException e){
+                throw new SQLiteException("Teacher table encountered unknown error");
+            }
+        }catch(SQLiteException e){
+            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
+            e.printStackTrace();
+            return false;
         }catch (TeacherDatabaseHelperException e){
             e.printStackTrace();
-            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
             return false;
         }
     }

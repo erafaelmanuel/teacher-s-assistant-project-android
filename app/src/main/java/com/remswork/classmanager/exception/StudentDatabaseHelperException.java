@@ -6,6 +6,10 @@ package com.remswork.classmanager.exception;
 
 public class StudentDatabaseHelperException extends Exception {
 
+    public StudentDatabaseHelperException(){
+        super();
+    }
+
     public StudentDatabaseHelperException(String message){
         super(message);
     }

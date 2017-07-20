@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 
 import com.remswork.classmanager.exception.SectionDatabaseHelperException;
 import com.remswork.classmanager.helper.service.SectionStudentListService;
@@ -73,21 +74,27 @@ public class SectionDatabaseHelper extends DatabaseHelper {
             String args[] = new String[]{String.valueOf(id)};
             SQLiteDatabase db = getWritableDatabase();
             Cursor cursor = db.rawQuery(query, args);
-
-            if(cursor.moveToNext()){
-                Section section = new Section();
-                section.setId(cursor.getInt(0));
-                section.setSectionName(cursor.getString(1));
-                section.setYear(cursor.getInt(2));
-                section.setDepartment(cursor.getString(3));
-                section.setStudents(sectionStudentListService.getStudentBySectionId(id));
-                cursor.close();
-                return section;
-            }else
-                throw new SectionDatabaseHelperException("No Section found with ID :" + id);
+            try {
+                if (cursor.moveToNext()) {
+                    Section section = new Section();
+                    section.setId(cursor.getInt(0));
+                    section.setSectionName(cursor.getString(1));
+                    section.setYear(cursor.getInt(2));
+                    section.setDepartment(cursor.getString(3));
+                    section.setStudents(sectionStudentListService.getStudentBySectionId(id));
+                    cursor.close();
+                    return section;
+                } else
+                    throw new SectionDatabaseHelperException("No Section found with ID :" + id);
+            }catch (RuntimeException e){
+                throw new SQLiteException("Section table encountered an unknown error");
+            }
+        }catch (SQLiteException e){
+            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
+            e.printStackTrace();
+            return null;
         }catch (SectionDatabaseHelperException e){
             e.printStackTrace();
-            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
             return null;
         }
     }
@@ -99,20 +106,26 @@ public class SectionDatabaseHelper extends DatabaseHelper {
             String args[] = new String[]{String.valueOf(id)};
             SQLiteDatabase db = getWritableDatabase();
             Cursor cursor = db.rawQuery(query, args);
-
-            if(cursor.moveToNext()){
-                Section section = new Section();
-                section.setId(cursor.getInt(0));
-                section.setSectionName(cursor.getString(1));
-                section.setYear(cursor.getInt(2));
-                section.setDepartment(cursor.getString(3));
-                cursor.close();
-                return section;
-            }else
-                throw new SectionDatabaseHelperException("No Section found with ID :" + id);
+            try {
+                if (cursor.moveToNext()) {
+                    Section section = new Section();
+                    section.setId(cursor.getInt(0));
+                    section.setSectionName(cursor.getString(1));
+                    section.setYear(cursor.getInt(2));
+                    section.setDepartment(cursor.getString(3));
+                    cursor.close();
+                    return section;
+                } else
+                    throw new SectionDatabaseHelperException("No Section found with ID :" + id);
+            }catch (RuntimeException e){
+                throw new SQLiteException("Section table encountered an unknown error");
+            }
+        }catch (SQLiteException e){
+            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
+            e.printStackTrace();
+            return null;
         }catch (SectionDatabaseHelperException e){
             e.printStackTrace();
-            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
             return null;
         }
     }
@@ -123,22 +136,29 @@ public class SectionDatabaseHelper extends DatabaseHelper {
             String query = String.format("SELECT * FROM %s ;", TABLE_NAME);
             SQLiteDatabase db = getWritableDatabase();
             Cursor cursor = db.rawQuery(query, null);
-            if(cursor.getCount() > 0){
-                while(cursor.moveToNext()){
-                    Section section = new Section();
-                    section.setId(cursor.getInt(0));
-                    section.setSectionName(cursor.getString(1));
-                    section.setYear(cursor.getInt(2));
-                    section.setDepartment(cursor.getString(3));
-                    listOfSection.add(section);
-                }
-                cursor.close();
-                return listOfSection;
-            }else
-                throw new SectionDatabaseHelperException("No section found");
+            try {
+                if (cursor.getCount() > 0) {
+                    while (cursor.moveToNext()) {
+                        Section section = new Section();
+                        section.setId(cursor.getInt(0));
+                        section.setSectionName(cursor.getString(1));
+                        section.setYear(cursor.getInt(2));
+                        section.setDepartment(cursor.getString(3));
+                        listOfSection.add(section);
+                    }
+                    cursor.close();
+                    return listOfSection;
+                } else
+                    throw new SectionDatabaseHelperException("No section found");
+            }catch (RuntimeException e){
+                throw new SQLiteException("Section table encountered an unknown error");
+            }
+        }catch (SQLiteException e){
+            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
+            e.printStackTrace();
+            return listOfSection;
         }catch (SectionDatabaseHelperException e){
             e.printStackTrace();
-            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
             return listOfSection;
         }
     }
@@ -153,15 +173,21 @@ public class SectionDatabaseHelper extends DatabaseHelper {
             contentValues.put(COL_2, newSection.getSectionName());
             contentValues.put(COL_3, newSection.getYear());
             contentValues.put(COL_4, newSection.getDepartment());
-
-            if(db.update(TABLE_NAME, contentValues, whereClause, args) > 0)
-                return true;
-            else
-                throw new SectionDatabaseHelperException(
-                        "Failed to update section with ID : " + id);
+            try {
+                if (db.update(TABLE_NAME, contentValues, whereClause, args) > 0)
+                    return true;
+                else
+                    throw new SectionDatabaseHelperException(
+                            "Failed to update section with ID : " + id);
+            }catch (RuntimeException e){
+                throw new SQLiteException("Section table encountered an unknown error");
+            }
+        }catch (SQLiteException e){
+            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
+            e.printStackTrace();
+            return false;
         }catch (SectionDatabaseHelperException e){
             e.printStackTrace();
-            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
             return false;
         }
     }
@@ -171,15 +197,21 @@ public class SectionDatabaseHelper extends DatabaseHelper {
             String whereClause = String.format("%s = ?", COL_1);
             String args[] = new String[]{String.valueOf(id)};
             SQLiteDatabase db = getWritableDatabase();
-
-            if(db.delete(TABLE_NAME, whereClause, args) > 0)
-                return true;
-            else
-                throw new SectionDatabaseHelperException(
-                        "Failed to delete section with ID : " + id);
+            try {
+                if (db.delete(TABLE_NAME, whereClause, args) > 0)
+                    return true;
+                else
+                    throw new SectionDatabaseHelperException(
+                            "Failed to delete section with ID : " + id);
+            }catch (RuntimeException e){
+                throw new SQLiteException("Section table encountered an unknown error");
+            }
+        }catch (SQLiteException e){
+            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
+            e.printStackTrace();
+            return true;
         }catch (SectionDatabaseHelperException e){
             e.printStackTrace();
-            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
             return true;
         }
     }

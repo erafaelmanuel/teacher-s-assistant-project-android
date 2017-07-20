@@ -8,6 +8,10 @@ import com.remswork.classmanager.helper.dao.SectionStudentListDatabaseHelper;
 
 public class SectionStudentListDatabaseHelperException extends Exception {
 
+    public SectionStudentListDatabaseHelperException(){
+        super();
+    }
+
     public SectionStudentListDatabaseHelperException(final String message){
         super(message);
     }

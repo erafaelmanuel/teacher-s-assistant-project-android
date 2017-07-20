@@ -26,6 +26,16 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public int addStudents(List<Student> listOfStudents) {
+        return studentDatabaseHelper.addStudents(listOfStudents);
+    }
+
+    @Override
+    public int addStudents(Student... students) {
+        return studentDatabaseHelper.addStudents(students);
+    }
+
+    @Override
     public Student getStudentById(final int id) {
         return studentDatabaseHelper.getStudentById(id);
     }
@@ -48,5 +58,10 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public boolean deleteStudentById(final int id) {
         return studentDatabaseHelper.deleteStudentById(id);
+    }
+
+    @Override
+    public int deleteAllStudent() {
+        return studentDatabaseHelper.deleteAllStudent();
     }
 }

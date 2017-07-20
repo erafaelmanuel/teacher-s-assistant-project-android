@@ -4,11 +4,16 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 
+import com.remswork.classmanager.exception.SubjectDatabaseHelperException;
 import com.remswork.classmanager.model.Subject;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static android.R.attr.id;
+import static android.R.attr.name;
 
 /**
  * Created by Rafael on 7/9/2017.
@@ -55,9 +60,11 @@ public class SubjectDatabaseHelper extends DatabaseHelper {
             contentValues.put(COL_5, subject.getUnit());
             contentValues.put(COL_6, subject.getImageIcon());
 
-            db.insert(TABLE_NAME, null, contentValues);
-            return true;
-        }catch(Exception e){
+            if(db.insert(TABLE_NAME, null, contentValues) != 1)
+                return true;
+            else
+                throw new SubjectDatabaseHelperException("Subject can't be added");
+        }catch(SubjectDatabaseHelperException e){
             e.printStackTrace();
             onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
             return false;
@@ -70,20 +77,28 @@ public class SubjectDatabaseHelper extends DatabaseHelper {
         try{
             SQLiteDatabase db = getWritableDatabase();
             Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(id)});
-            if(cursor.moveToNext()){
-                subject.setId(cursor.getInt(0));
-                subject.setName(cursor.getString(1));
-                subject.setCode(cursor.getString(2));
-                subject.setDesc(cursor.getString(3));
-                subject.setUnit(cursor.getInt(4));
-                subject.setImageIcon(cursor.getInt(5));
-                cursor.close();
-                return subject;
-            }else
-                throw new Exception();
-        }catch(Exception e){
-            e.printStackTrace();
+
+            try {
+                if (cursor.moveToNext()) {
+                    subject.setId(cursor.getInt(0));
+                    subject.setName(cursor.getString(1));
+                    subject.setCode(cursor.getString(2));
+                    subject.setDesc(cursor.getString(3));
+                    subject.setUnit(cursor.getInt(4));
+                    subject.setImageIcon(cursor.getInt(5));
+                    cursor.close();
+                    return subject;
+                } else
+                    throw new SubjectDatabaseHelperException("No subject found with ID : " + id);
+            }catch (RuntimeException e){
+                throw new SQLiteException("Subject table encountered an unknown error");
+            }
+        }catch (SQLiteException e){
             onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
+            e.printStackTrace();
+            return null;
+        }catch(SubjectDatabaseHelperException e){
+            e.printStackTrace();
             return null;
         }
     }
@@ -95,20 +110,28 @@ public class SubjectDatabaseHelper extends DatabaseHelper {
             SQLiteDatabase db = getWritableDatabase();
             String[] args = new String[]{name};
             Cursor cursor = db.rawQuery(query, args);
-            if(cursor.moveToNext()){
-                subject.setId(cursor.getInt(0));
-                subject.setName(cursor.getString(1));
-                subject.setCode(cursor.getString(2));
-                subject.setDesc(cursor.getString(3));
-                subject.setUnit(cursor.getInt(4));
-                subject.setImageIcon(cursor.getInt(5));
-                cursor.close();
-                return subject;
-            }else
-                throw new Exception();
-        }catch(Exception e){
-            e.printStackTrace();
+            try {
+                if (cursor.moveToNext()) {
+                    subject.setId(cursor.getInt(0));
+                    subject.setName(cursor.getString(1));
+                    subject.setCode(cursor.getString(2));
+                    subject.setDesc(cursor.getString(3));
+                    subject.setUnit(cursor.getInt(4));
+                    subject.setImageIcon(cursor.getInt(5));
+                    cursor.close();
+                    return subject;
+                } else
+                    throw new SubjectDatabaseHelperException(
+                            "No subject found with ID : " + name);
+            }catch (RuntimeException e){
+                throw new SQLiteException("Subject table encountered an unknown error");
+            }
+        }catch (SQLiteException e){
             onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
+            e.printStackTrace();
+            return null;
+        }catch(SubjectDatabaseHelperException e){
+            e.printStackTrace();
             return null;
         }
     }
@@ -119,22 +142,32 @@ public class SubjectDatabaseHelper extends DatabaseHelper {
         try{
             SQLiteDatabase db = getWritableDatabase();
             Cursor cursor = db.rawQuery(query, null);
-            while(cursor.moveToNext()){
-                Subject subject = new Subject();
-                subject.setId(cursor.getInt(0));
-                subject.setName(cursor.getString(1));
-                subject.setCode(cursor.getString(2));
-                subject.setDesc(cursor.getString(3));
-                subject.setUnit(cursor.getInt(4));
-                subject.setImageIcon(cursor.getInt(5));
-                listOfSubject.add(subject);
+            try {
+                if (cursor.getCount() > 0) {
+                    while (cursor.moveToNext()) {
+                        Subject subject = new Subject();
+                        subject.setId(cursor.getInt(0));
+                        subject.setName(cursor.getString(1));
+                        subject.setCode(cursor.getString(2));
+                        subject.setDesc(cursor.getString(3));
+                        subject.setUnit(cursor.getInt(4));
+                        subject.setImageIcon(cursor.getInt(5));
+                        listOfSubject.add(subject);
+                    }
+                    cursor.close();
+                    return listOfSubject;
+                } else
+                    throw new SubjectDatabaseHelperException("No subject found.");
+            }catch (RuntimeException e){
+                throw new SQLiteException("Subject table encountered an unknown error");
             }
-            cursor.close();
-            return listOfSubject;
-        }catch(Exception e){
-            e.printStackTrace();
+        }catch (SQLiteException e){
             onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
-            return null;
+            e.printStackTrace();
+            return listOfSubject;
+        }catch(SubjectDatabaseHelperException e){
+            e.printStackTrace();
+            return listOfSubject;
         }
     }
 
@@ -148,12 +181,19 @@ public class SubjectDatabaseHelper extends DatabaseHelper {
             contentValues.put(COL_4, newSubject.getDesc());
             contentValues.put(COL_5, newSubject.getUnit());
             contentValues.put(COL_6, newSubject.getImageIcon());
-
-            if(db.update(TABLE_NAME, contentValues, COL_1 + " = " + id, null) > 0)
-                return true;
-            else
-                throw new Exception();
-        }catch (Exception e){
+            try {
+                if (db.update(TABLE_NAME, contentValues, COL_1 + " = " + id, null) > 0)
+                    return true;
+                else
+                    throw new SubjectDatabaseHelperException("Failed to update subject");
+            }catch (RuntimeException e){
+                throw new SQLiteException("Subject table encountered an unknown error");
+            }
+        }catch (SQLiteException e){
+            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
+            e.printStackTrace();
+            return false;
+        }catch (SubjectDatabaseHelperException e){
             e.printStackTrace();
             return false;
         }
@@ -163,11 +203,20 @@ public class SubjectDatabaseHelper extends DatabaseHelper {
         try{
             String whereClause = String.format("%s = ?", COL_1);
             SQLiteDatabase db = getWritableDatabase();
-            db.delete(TABLE_NAME, whereClause, new String[]{String.valueOf(id)});
-            return true;
-        }catch (Exception e){
-            e.printStackTrace();
+            try {
+                if (db.delete(TABLE_NAME, whereClause, new String[]{String.valueOf(id)}) > 0)
+                    return true;
+                else
+                    throw new SubjectDatabaseHelperException("Failed to delete subject");
+            }catch (RuntimeException e){
+                throw new SQLiteException("Subject table encountered an unknown error");
+            }
+        }catch (SQLiteException e){
             onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
+            e.printStackTrace();
+            return false;
+        }catch (SubjectDatabaseHelperException e){
+            e.printStackTrace();
             return false;
         }
     }

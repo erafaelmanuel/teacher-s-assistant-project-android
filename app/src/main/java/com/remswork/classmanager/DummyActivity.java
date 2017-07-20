@@ -76,12 +76,20 @@ public class DummyActivity extends AppCompatActivity {
         //helper.upgradeTable(true);
 
         //helper.updateStudentById(1, new Student(1, "aris","beta","coconut", 1, "m", 1,-1));
-//        helper.deleteStudentById(1);
+        //helper.deleteStudentById(1);
         //Toast.makeText(this, helper.addStudent(new Student(1, "a","b","c", 1, "m", 1,-1)) + "", Toast.LENGTH_LONG)
 //        Toast.makeText(this, helper.getStudentsByLastName("beta").size() + "", Toast.LENGTH_LONG)
 
-        TeacherDatabaseHelper helper1 = new TeacherDatabaseHelper(this);
+//        TeacherDatabaseHelper helper1 = new TeacherDatabaseHelper(this);
+//        int count = helper.addStudents(new Student(1, "abaka","b","c", 1, "m", 1,-1), new Student(2, "verle","b","c", 1, "m", 1,-1),
+//                new Student(3, "verle","b","c", 1, "m", 1,-1), new Student(4, "verle","b","c", 1, "m", 1,-1),
+//                new Student(5, "verle","b","c", 1, "m", 1,-1),
+//                new Student(6, "verle","b","c", 1, "m", 1,-1),
+//                        new Student(7, "verle","b","c", 1, "m", 1,-1));
 
+//        for(int ctr = 0 ; ctr < helper.getAllStudent().size() ; ctr++){
+//            helper.deleteStudentById(ctr+1);
+//        }
 //        Toast.makeText(this, helper1.getTeacherByEmail("erafaelmanuel@gmail.com") + "", Toast.LENGTH_LONG)
 
 //        StudentService service = new StudentServiceImpl(this);
@@ -90,21 +98,29 @@ public class DummyActivity extends AppCompatActivity {
 
         //SectionDatabaseHelper sectionDatabaseHelper = new SectionDatabaseHelper(this);
         //sectionDatabaseHelper.upgradeTable(true);
-        SectionStudentListService sectionStudentListService = new SectionStudentListServiceImpl(this);
-        StudentService studentService = new StudentServiceImpl(this);
-        SectionService sectionService = new SectionServiceImpl(this);
+//        SectionStudentListService sectionStudentListService = new SectionStudentListServiceImpl(this);
+//        StudentService studentService = new StudentServiceImpl(this);
+//        SectionService sectionService = new SectionServiceImpl(this);
 
         //Toast.makeText(this, sectionDatabaseHelper.addSection(new Section(1,"name",1995, "no")) + "", Toast.LENGTH_LONG);
         //Toast.makeText(this, sectionDatabaseHelper.getSectionById(1) + "", Toast.LENGTH_LONG)
         //Toast.makeText(this, sectionDatabaseHelper.updateSectionById(1, new Section(1,"rafael",1996, "no")) + "", Toast.LENGTH_LONG)
 //        Toast.makeText(this, sectionDatabaseHelper.deleteSectionById(1) + "", Toast.LENGTH_LONG)
         //sectionStudentListService.addStudentId(1, 2);
-        sectionStudentListService.deleteAllStudentFromListBySectionId(1);
-        Toast.makeText(this, sectionService.getSectionById(1) + "", Toast.LENGTH_LONG)
+        //sectionStudentListService.deleteAllStudentFromListBySectionId(1);
+        //Toast.makeText(this, sectionService.getSectionById(1) + "", Toast.LENGTH_LONG)
         //Toast.makeText(this, studentService.getAllStudent().get(0) + "", Toast.LENGTH_LONG)
+//        TeacherDatabaseHelper teacherDatabaseHelper = new TeacherDatabaseHelper(this);
+//        teacherDatabaseHelper.onUpgrade(teacherDatabaseHelper.getWritableDatabase(),
+//                teacherDatabaseHelper.VERSION-1, teacherDatabaseHelper.VERSION);
 //        TeacherService teacherService = new TeacherServiceImpl(this);
 //        teacherService.addTeacher(new Teacher(3, "r","m","e","p"));
+        //teacherService.getTeacherAuthenticate("e","m");
 //        Toast.makeText(this, teacherService.getListOfTeacher().size() + "", Toast.LENGTH_LONG)
+        helper.deleteStudentById(5);
+        helper.deleteStudentById(6);
+        helper.deleteStudentById(7);
+        Toast.makeText(this, helper.getAllStudent().size() + "", Toast.LENGTH_LONG)
         .show();
         //saveUserDetail("", "");
         //goToNextActiviy(null, LoginActivity.class);

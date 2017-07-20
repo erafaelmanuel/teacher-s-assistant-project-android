@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 
 import com.remswork.classmanager.exception.ClazzDatabaseHelperException;
 import com.remswork.classmanager.helper.service.SectionService;
@@ -37,12 +38,14 @@ public class ClazzDatabaseHelper extends DatabaseHelper {
         teacherService = new TeacherServiceImpl(context);
         subjectService = new SubjectServiceImpl(context);
         sectionService = new SectionServiceImpl(context);
+        onCreate(getWritableDatabase());
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String query = String.format("CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "%s INTEGER, %s INTEGER, %s INTEGER);", TABLE_NAME, COL_1, COL_2, COL_3, COL_4);
+        String query = String.format("CREATE TABLE IF NOT EXISTS '%s' (%s INTEGER PRIMARY KEY " +
+                "AUTOINCREMENT, %s INTEGER, %s INTEGER, %s INTEGER);",
+                TABLE_NAME, COL_1, COL_2, COL_3, COL_4);
         db.execSQL(query);
     }
 
@@ -50,11 +53,6 @@ public class ClazzDatabaseHelper extends DatabaseHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS '" + TABLE_NAME + "'");
         onCreate(db);
-    }
-
-    public void upgradeTable(boolean isYes){
-        if(isYes)
-            onUpgrade(getWritableDatabase(), VERSION - 1, VERSION);
     }
 
     public boolean addClazz(Clazz clazz){
@@ -71,6 +69,7 @@ public class ClazzDatabaseHelper extends DatabaseHelper {
             else
                 throw new ClazzDatabaseHelperException("Class can't be added");
         }catch (ClazzDatabaseHelperException e){
+            onUpgrade(getWritableDatabase(), VERSION - 1, VERSION);
             e.printStackTrace();
             return false;
         }
@@ -83,23 +82,28 @@ public class ClazzDatabaseHelper extends DatabaseHelper {
             String query = String.format("SELECT * FROM %s WHERE %s = ? LIMIT 1;",
                     TABLE_NAME, COL_1);
             Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(id)});
+            try {
+                if (cursor.moveToNext()) {
+                    int clazzId = cursor.getInt(0);
+                    Teacher teacher = teacherService.getTeacherById(cursor.getInt(1));
+                    Subject subject = subjectService.getSubjectById(cursor.getInt(2));
+                    Section section = sectionService.getSectionById(cursor.getInt(3));
 
-            if(cursor.moveToNext()){
-
-                int clazzId = cursor.getInt(0);
-                Teacher teacher = teacherService.getTeacherById(cursor.getInt(1));
-                Subject subject = subjectService.getSubjectById(cursor.getInt(2));
-                Section section = sectionService.getSectionById(cursor.getInt(3));
-
-                clazz.setId(clazzId);
-                clazz.setTeacher(teacher);
-                clazz.setSubject(subject);
-                clazz.setSection(section);
-                cursor.close();
-                return clazz;
-            }else
-                throw new ClazzDatabaseHelperException("No class found with ID : " + id);
-
+                    clazz.setId(clazzId);
+                    clazz.setTeacher(teacher);
+                    clazz.setSubject(subject);
+                    clazz.setSection(section);
+                    cursor.close();
+                    return clazz;
+                } else
+                    throw new ClazzDatabaseHelperException("No class found with ID : " + id);
+            }catch (RuntimeException e){
+                throw new SQLiteException("Class table encountered an unknown error");
+            }
+        }catch (SQLiteException e){
+            onUpgrade(getWritableDatabase(), VERSION - 1, VERSION);
+            e.printStackTrace();
+            return null;
         }catch (ClazzDatabaseHelperException e){
             e.printStackTrace();
             return null;

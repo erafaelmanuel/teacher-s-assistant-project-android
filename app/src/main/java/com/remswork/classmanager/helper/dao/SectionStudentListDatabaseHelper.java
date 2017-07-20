@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 
 import com.remswork.classmanager.exception.SectionStudentListDatabaseHelperException;
 import com.remswork.classmanager.helper.service.StudentService;
@@ -71,22 +72,28 @@ public class SectionStudentListDatabaseHelper extends DatabaseHelper {
             String args[] = new String[]{String.valueOf(studentId)};
             SQLiteDatabase db = getWritableDatabase();
             Cursor cursor = db.rawQuery(query, args);
-
-            if(cursor.getCount() > 0){
-                int studentIds[] = new int[cursor.getCount()];
-                int counter = 0;
-                while(cursor.moveToNext()){
-                    studentIds[counter] = cursor.getInt(0);
-                    counter ++;
-                }
-                cursor.close();
-                return studentIds;
-            }else
-                throw new SectionStudentListDatabaseHelperException(
-                        "No section found from the list");
+            try {
+                if (cursor.getCount() > 0) {
+                    int studentIds[] = new int[cursor.getCount()];
+                    int counter = 0;
+                    while (cursor.moveToNext()) {
+                        studentIds[counter] = cursor.getInt(0);
+                        counter++;
+                    }
+                    cursor.close();
+                    return studentIds;
+                } else
+                    throw new SectionStudentListDatabaseHelperException(
+                            "No section found from the list");
+            }catch (RuntimeException e){
+                throw new SQLiteException("Student List table encountered an unknown error");
+            }
+        }catch (SQLiteException e){
+            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
+            e.printStackTrace();
+            return new int[]{};
         }catch(SectionStudentListDatabaseHelperException e){
             e.printStackTrace();
-            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
             return new int[]{};
         }
     }
@@ -98,18 +105,25 @@ public class SectionStudentListDatabaseHelper extends DatabaseHelper {
             String args[] = new String[]{String.valueOf(sectionId), String.valueOf(studentId)};
             SQLiteDatabase db = getWritableDatabase();
             Cursor cursor = db.rawQuery(query, args);
-            if(cursor.moveToNext()){
-                Student student;
-                if((student = studentService.getStudentById(studentId)) != null) {
-                    cursor.close();
-                    return student;
+            try {
+                if (cursor.moveToNext()) {
+                    Student student;
+                    if ((student = studentService.getStudentById(studentId)) != null) {
+                        cursor.close();
+                        return student;
+                    }
                 }
+                throw new SectionStudentListDatabaseHelperException(
+                        "No student found from the list");
+            }catch (RuntimeException e){
+                throw new SQLiteException("Student List table encountered an unknown error");
             }
-            throw new SectionStudentListDatabaseHelperException(
-                    "No student found from the list");
+        }catch (SQLiteException e){
+            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
+            e.printStackTrace();
+            return null;
         }catch(SectionStudentListDatabaseHelperException e){
             e.printStackTrace();
-            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
             return null;
         }
     }
@@ -121,21 +135,27 @@ public class SectionStudentListDatabaseHelper extends DatabaseHelper {
             String args[] = new String[]{String.valueOf(sectionId)};
             SQLiteDatabase db = getWritableDatabase();
             Cursor cursor = db.rawQuery(query, args);
-
-            if(cursor.getCount() > 0){
-                while(cursor.moveToNext()){
-                    Student student;
-                    if((student = studentService.getStudentById(cursor.getInt(2))) != null)
-                        listOfStudent.add(student);
-                }
-                cursor.close();
-                return listOfStudent;
-            }else
-                throw new SectionStudentListDatabaseHelperException(
-                        "No student found from the list");
+            try {
+                if (cursor.getCount() > 0) {
+                    while (cursor.moveToNext()) {
+                        Student student;
+                        if ((student = studentService.getStudentById(cursor.getInt(2))) != null)
+                            listOfStudent.add(student);
+                    }
+                    cursor.close();
+                    return listOfStudent;
+                } else
+                    throw new SectionStudentListDatabaseHelperException(
+                            "No student found from the list");
+            }catch (RuntimeException e){
+                throw new SQLiteException("Student List table encountered an unknown error");
+            }
+        }catch (SQLiteException e){
+            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
+            e.printStackTrace();
+            return listOfStudent;
         }catch(SectionStudentListDatabaseHelperException e){
             e.printStackTrace();
-            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
             return listOfStudent;
         }
     }
@@ -150,15 +170,21 @@ public class SectionStudentListDatabaseHelper extends DatabaseHelper {
             ContentValues contentValues = new ContentValues();
             contentValues.put(COL_2, sectionId);
             contentValues.put(COL_3, studentId);
-
-            if(db.update(TABLE_NAME, contentValues, whereClause, args) > 0)
-                return true;
-            else
-                throw new SectionStudentListDatabaseHelperException(
-                        "Failed to update student from list");
+            try {
+                if (db.update(TABLE_NAME, contentValues, whereClause, args) > 0)
+                    return true;
+                else
+                    throw new SectionStudentListDatabaseHelperException(
+                            "Failed to update student from list");
+            }catch (RuntimeException e){
+                throw new SQLiteException("Student List table encountered an unknown error");
+            }
+        }catch (SQLiteException e){
+            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
+            e.printStackTrace();
+            return false;
         }catch (SectionStudentListDatabaseHelperException e){
             e.printStackTrace();
-            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
             return false;
         }
     }
@@ -169,15 +195,21 @@ public class SectionStudentListDatabaseHelper extends DatabaseHelper {
             String whereClause = String.format("%s = ? AND %s = ?", COL_2, COL_3);
             String args[] = new String[]{String.valueOf(sectionId), String.valueOf(studentId)};
             SQLiteDatabase db = getWritableDatabase();
-
-            if(db.delete(TABLE_NAME, whereClause, args) > 0)
-                return true;
-            else
-                throw new SectionStudentListDatabaseHelperException(
-                        "Failed to delete student from list");
+            try {
+                if (db.delete(TABLE_NAME, whereClause, args) > 0)
+                    return true;
+                else
+                    throw new SectionStudentListDatabaseHelperException(
+                            "Failed to delete student from list");
+            }catch (RuntimeException e){
+                throw new SQLiteException("Student List table encountered an unknown error");
+            }
+        }catch (SQLiteException e){
+            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
+            e.printStackTrace();
+            return false;
         }catch (SectionStudentListDatabaseHelperException e){
             e.printStackTrace();
-            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
             return false;
         }
     }
@@ -187,15 +219,21 @@ public class SectionStudentListDatabaseHelper extends DatabaseHelper {
             String whereClause = String.format("%s = ?", COL_2);
             String args[] = new String[]{String.valueOf(sectionId)};
             SQLiteDatabase db = getWritableDatabase();
-
-            if(db.delete(TABLE_NAME, whereClause, args) > 0)
-                return true;
-            else
-                throw new SectionStudentListDatabaseHelperException(
-                        "Failed to delete student from list");
+            try {
+                if (db.delete(TABLE_NAME, whereClause, args) > 0)
+                    return true;
+                else
+                    throw new SectionStudentListDatabaseHelperException(
+                            "Failed to delete student from list");
+            }catch (RuntimeException e){
+                throw new SQLiteException("Student List table encountered an unknown error");
+            }
+        }catch (SQLiteException e){
+            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
+            e.printStackTrace();
+            return false;
         }catch (SectionStudentListDatabaseHelperException e){
             e.printStackTrace();
-            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
             return false;
         }
     }
@@ -205,15 +243,21 @@ public class SectionStudentListDatabaseHelper extends DatabaseHelper {
             String whereClause = String.format("%s = ?", COL_3);
             String args[] = new String[]{String.valueOf(studentId)};
             SQLiteDatabase db = getWritableDatabase();
-
-            if(db.delete(TABLE_NAME, whereClause, args) > 0)
-                return true;
-            else
-                throw new SectionStudentListDatabaseHelperException(
-                        "Failed to delete student from list");
+            try {
+                if (db.delete(TABLE_NAME, whereClause, args) > 0)
+                    return true;
+                else
+                    throw new SectionStudentListDatabaseHelperException(
+                            "Failed to delete student from list");
+            }catch (RuntimeException e){
+                throw new SQLiteException("Student List table encountered an unknown error");
+            }
+        }catch (SQLiteException e){
+            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
+            e.printStackTrace();
+            return false;
         }catch (SectionStudentListDatabaseHelperException e){
             e.printStackTrace();
-            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
             return false;
         }
     }

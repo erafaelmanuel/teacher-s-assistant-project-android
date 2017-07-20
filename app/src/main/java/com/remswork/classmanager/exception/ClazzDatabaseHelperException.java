@@ -5,6 +5,10 @@ package com.remswork.classmanager.exception;
  */
 public class ClazzDatabaseHelperException extends Exception{
 
+    public ClazzDatabaseHelperException(){
+        super();
+    }
+
     public ClazzDatabaseHelperException(final String message) {
         super(message);
     }

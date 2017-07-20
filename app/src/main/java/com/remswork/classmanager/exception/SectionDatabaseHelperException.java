@@ -5,6 +5,11 @@ package com.remswork.classmanager.exception;
  */
 
 public class SectionDatabaseHelperException extends Exception {
+
+    public SectionDatabaseHelperException(){
+        super();
+    }
+
     public SectionDatabaseHelperException(final String message){
         super(message);
     }

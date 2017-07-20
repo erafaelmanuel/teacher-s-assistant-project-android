@@ -11,9 +11,12 @@ import java.util.List;
 public interface StudentService {
 
     boolean addStudent(Student student);
+    int addStudents(List<Student> listOfStudents);
+    int addStudents(Student... students);
     Student getStudentById(int id);
     List<Student> getStudentsByLastName(String lastName);
     List<Student> getAllStudent();
     boolean updateStudentById(int id, Student newStudent);
     boolean deleteStudentById(int id);
+    int deleteAllStudent();
 }
