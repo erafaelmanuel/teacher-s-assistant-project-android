@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.remswork.classmanager.helper.dao.ScheduleDatabaseHelper;
 import com.remswork.classmanager.helper.dao.SectionDatabaseHelper;
 import com.remswork.classmanager.helper.dao.StudentDatabaseHelper;
 import com.remswork.classmanager.helper.dao.SubjectDatabaseHelper;
@@ -26,6 +27,7 @@ import com.remswork.classmanager.helper.service.impl.SectionServiceImpl;
 import com.remswork.classmanager.helper.service.impl.SectionStudentListServiceImpl;
 import com.remswork.classmanager.helper.service.impl.StudentServiceImpl;
 import com.remswork.classmanager.helper.service.impl.TeacherServiceImpl;
+import com.remswork.classmanager.model.Schedule;
 import com.remswork.classmanager.model.Section;
 import com.remswork.classmanager.model.Student;
 import com.remswork.classmanager.model.Subject;
@@ -117,11 +119,14 @@ public class DummyActivity extends AppCompatActivity {
 //        teacherService.addTeacher(new Teacher(3, "r","m","e","p"));
         //teacherService.getTeacherAuthenticate("e","m");
 //        Toast.makeText(this, teacherService.getListOfTeacher().size() + "", Toast.LENGTH_LONG)
-        helper.deleteStudentById(5);
-        helper.deleteStudentById(6);
-        helper.deleteStudentById(7);
-        Toast.makeText(this, helper.getAllStudent().size() + "", Toast.LENGTH_LONG)
-        .show();
+//        helper.deleteStudentById(5);
+//        helper.deleteStudentById(6);
+//        helper.deleteStudentById(7);
+//        Toast.makeText(this, helper.getAllStudent().size() + "", Toast.LENGTH_LONG)
+//        .show();
+
+        ScheduleDatabaseHelper scheduleDatabaseHelper = new ScheduleDatabaseHelper(this);
+        scheduleDatabaseHelper.addSchedule(null);
         //saveUserDetail("", "");
         //goToNextActiviy(null, LoginActivity.class);
 

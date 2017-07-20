@@ -12,7 +12,7 @@ public class Schedule {
     private String time;
     private int hour;
     private String room;
-    private Clazz clazz;
+    private int clazzId;
 
 
     public Schedule(){
@@ -20,13 +20,13 @@ public class Schedule {
     }
 
     public Schedule(int id, String day, String time, int hour, String room,
-                    Clazz clazz) {
+                    int clazzId) {
         this.id = id;
         this.day = day;
         this.time = time;
         this.hour = hour;
         this.room = room;
-        this.clazz = clazz;
+        this.clazzId = clazzId;
     }
 
     public int getId() {
@@ -69,12 +69,12 @@ public class Schedule {
         this.room = room;
     }
 
-    public Clazz getClazz() {
-        return clazz;
+    public int getClazzId() {
+        return clazzId;
     }
 
-    public void setClazz(Clazz clazz) {
-        this.clazz = clazz;
+    public void setClazzId(int clazzId) {
+        this.clazzId = clazzId;
     }
 
     @Override
@@ -84,7 +84,7 @@ public class Schedule {
                 ", day='" + day + '\'' +
                 ", time='" + time + '\'' +
                 ", hour=" + hour +
-                ", clazz=" + clazz +
+                ", clazz=" + clazzId +
                 '}';
     }
 }

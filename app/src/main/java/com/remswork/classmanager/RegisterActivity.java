@@ -16,12 +16,13 @@ import java.util.HashMap;
 public class RegisterActivity extends AppCompatActivity
         implements RegisterFragment.RegisterFragmentListener{
 
-    private TeacherService teacherService = new TeacherServiceImpl(this);
+    private TeacherService teacherService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        teacherService = new TeacherServiceImpl(this);
     }
 
     @Override
