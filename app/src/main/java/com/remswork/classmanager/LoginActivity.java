@@ -8,7 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.remswork.classmanager.fragment.LoginFragment;
-import com.remswork.classmanager.model.Teacher;
+import com.remswork.classmanager.model.clazz.Teacher;
 import com.remswork.classmanager.helper.service.TeacherService;
 import com.remswork.classmanager.helper.service.impl.TeacherServiceImpl;
 

@@ -1,6 +1,6 @@
 package com.remswork.classmanager.helper.service;
 
-import com.remswork.classmanager.model.Teacher;
+import com.remswork.classmanager.model.clazz.Teacher;
 
 import java.util.HashMap;
 import java.util.List;

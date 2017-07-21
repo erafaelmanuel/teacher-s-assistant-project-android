@@ -1,4 +1,4 @@
-package com.remswork.classmanager.model;
+package com.remswork.classmanager.model.clazz;
 
 import java.util.ArrayList;
 import java.util.List;

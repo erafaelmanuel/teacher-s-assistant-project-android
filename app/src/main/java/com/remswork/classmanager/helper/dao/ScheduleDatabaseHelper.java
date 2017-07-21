@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 
 import com.remswork.classmanager.exception.ScheduleDatabaseHelperException;
-import com.remswork.classmanager.model.Schedule;
+import com.remswork.classmanager.model.clazz.Schedule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,7 +81,7 @@ public class ScheduleDatabaseHelper extends DatabaseHelper {
         }
         return counter;
     }
-    public int addSchedule(final Schedule schedules[]){
+    public int addSchedule(final Schedule... schedules){
         int counter = 0;
         for(Schedule schedule : schedules){
             if(addSchedule(schedule))

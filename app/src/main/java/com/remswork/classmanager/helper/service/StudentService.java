@@ -1,6 +1,6 @@
 package com.remswork.classmanager.helper.service;
 
-import com.remswork.classmanager.model.Student;
+import com.remswork.classmanager.model.clazz.Student;
 
 import java.util.List;
 

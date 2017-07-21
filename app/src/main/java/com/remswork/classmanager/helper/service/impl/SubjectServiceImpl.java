@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.remswork.classmanager.helper.dao.SubjectDatabaseHelper;
 import com.remswork.classmanager.helper.service.SubjectService;
-import com.remswork.classmanager.model.Subject;
+import com.remswork.classmanager.model.clazz.Subject;
 
 import java.util.List;
 

@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 
 import com.remswork.classmanager.exception.TeacherDatabaseHelperException;
-import com.remswork.classmanager.model.Teacher;
+import com.remswork.classmanager.model.clazz.Teacher;
 
 import java.util.ArrayList;
 import java.util.HashMap;

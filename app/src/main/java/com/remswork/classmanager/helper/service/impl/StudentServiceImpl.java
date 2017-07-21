@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.remswork.classmanager.helper.dao.StudentDatabaseHelper;
 import com.remswork.classmanager.helper.service.StudentService;
-import com.remswork.classmanager.model.Student;
+import com.remswork.classmanager.model.clazz.Student;
 
 import java.util.List;
 

@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.remswork.classmanager.helper.dao.TeacherDatabaseHelper;
 import com.remswork.classmanager.helper.service.TeacherService;
-import com.remswork.classmanager.model.Teacher;
+import com.remswork.classmanager.model.clazz.Teacher;
 
 import java.util.HashMap;
 import java.util.List;

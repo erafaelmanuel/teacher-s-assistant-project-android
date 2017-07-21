@@ -7,13 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 
 import com.remswork.classmanager.exception.SubjectDatabaseHelperException;
-import com.remswork.classmanager.model.Subject;
+import com.remswork.classmanager.model.clazz.Subject;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.R.attr.id;
-import static android.R.attr.name;
 
 /**
  * Created by Rafael on 7/9/2017.

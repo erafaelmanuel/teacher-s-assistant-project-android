@@ -1,37 +1,16 @@
 package com.remswork.classmanager;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.remswork.classmanager.helper.dao.ScheduleDatabaseHelper;
-import com.remswork.classmanager.helper.dao.SectionDatabaseHelper;
 import com.remswork.classmanager.helper.dao.StudentDatabaseHelper;
-import com.remswork.classmanager.helper.dao.SubjectDatabaseHelper;
-import com.remswork.classmanager.helper.dao.TeacherDatabaseHelper;
-import com.remswork.classmanager.helper.service.SectionService;
-import com.remswork.classmanager.helper.service.SectionStudentListService;
-import com.remswork.classmanager.helper.service.StudentService;
-import com.remswork.classmanager.helper.service.TeacherService;
-import com.remswork.classmanager.helper.service.impl.SectionServiceImpl;
-import com.remswork.classmanager.helper.service.impl.SectionStudentListServiceImpl;
-import com.remswork.classmanager.helper.service.impl.StudentServiceImpl;
-import com.remswork.classmanager.helper.service.impl.TeacherServiceImpl;
-import com.remswork.classmanager.model.Schedule;
-import com.remswork.classmanager.model.Section;
-import com.remswork.classmanager.model.Student;
-import com.remswork.classmanager.model.Subject;
-import com.remswork.classmanager.model.Teacher;
+import com.remswork.classmanager.model.clazz.Teacher;
 
 /**
  * Created by Rafael on 7/4/2017.

@@ -1,4 +1,4 @@
-package com.remswork.classmanager.model;
+package com.remswork.classmanager.model.clazz;
 
 /**
  * Created by Rafael on 7/13/2017.

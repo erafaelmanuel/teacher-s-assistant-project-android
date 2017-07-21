@@ -1,4 +1,4 @@
-package com.remswork.classmanager.model;
+package com.remswork.classmanager.model.clazz;
 
 import android.os.Parcel;
 import android.os.Parcelable;

@@ -1,9 +1,9 @@
 package com.remswork.classmanager.helper.service.impl;
 
 import com.remswork.classmanager.helper.service.ClazzService;
-import com.remswork.classmanager.model.Clazz;
-import com.remswork.classmanager.model.Subject;
-import com.remswork.classmanager.model.Teacher;
+import com.remswork.classmanager.model.clazz.Clazz;
+import com.remswork.classmanager.model.clazz.Subject;
+import com.remswork.classmanager.model.clazz.Teacher;
 
 /**
  * Created by Rafael on 7/18/2017.
@@ -32,12 +32,12 @@ public class ClazzServiceImpl implements ClazzService {
     }
 
     @Override
-    public boolean updateClazz(Clazz clazz) {
+    public boolean updateClazzById(int id, Clazz clazz) {
         return false;
     }
 
     @Override
-    public boolean updateClazzesByTeacher(Teacher teacher) {
+    public boolean updateClazzTeacherId(int teacherId, Clazz clazz) {
         return false;
     }
 
@@ -47,7 +47,7 @@ public class ClazzServiceImpl implements ClazzService {
     }
 
     @Override
-    public boolean deleteClazzezByTeacher(Teacher teacher) {
+    public boolean deleteClazzezByTeacher(int teacherId) {
         return false;
     }
 }

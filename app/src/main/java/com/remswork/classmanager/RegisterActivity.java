@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.remswork.classmanager.fragment.RegisterFragment;
-import com.remswork.classmanager.model.Teacher;
+import com.remswork.classmanager.model.clazz.Teacher;
 import com.remswork.classmanager.helper.service.TeacherService;
 import com.remswork.classmanager.helper.service.impl.TeacherServiceImpl;
 

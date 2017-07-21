@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteException;
 import com.remswork.classmanager.exception.SectionStudentListDatabaseHelperException;
 import com.remswork.classmanager.helper.service.StudentService;
 import com.remswork.classmanager.helper.service.impl.StudentServiceImpl;
-import com.remswork.classmanager.model.Student;
+import com.remswork.classmanager.model.clazz.Student;
 
 import java.util.ArrayList;
 import java.util.List;

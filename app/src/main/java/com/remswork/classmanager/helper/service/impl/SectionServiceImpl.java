@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.remswork.classmanager.helper.dao.SectionDatabaseHelper;
 import com.remswork.classmanager.helper.service.SectionService;
-import com.remswork.classmanager.model.Section;
+import com.remswork.classmanager.model.clazz.Section;
 
 import java.util.List;
 
