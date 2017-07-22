@@ -11,6 +11,7 @@ import android.view.View;
 import com.remswork.classmanager.helper.dao.ScheduleDatabaseHelper;
 import com.remswork.classmanager.helper.dao.StudentDatabaseHelper;
 import com.remswork.classmanager.model.clazz.Teacher;
+import com.remswork.classmanager.model.grade.Syllabus;
 
 /**
  * Created by Rafael on 7/4/2017.
@@ -104,8 +105,8 @@ public class DummyActivity extends AppCompatActivity {
 //        Toast.makeText(this, helper.getAllStudent().size() + "", Toast.LENGTH_LONG)
 //        .show();
 
-        ScheduleDatabaseHelper scheduleDatabaseHelper = new ScheduleDatabaseHelper(this);
-        scheduleDatabaseHelper.addSchedule(null);
+//        ScheduleDatabaseHelper scheduleDatabaseHelper = new ScheduleDatabaseHelper(this);
+//        scheduleDatabaseHelper.addSchedule(null);
         //saveUserDetail("", "");
         //goToNextActiviy(null, LoginActivity.class);
 
@@ -118,6 +119,8 @@ public class DummyActivity extends AppCompatActivity {
         editor.putString("cemail", username);
         editor.putString("cpassword", password);
         editor.apply();
+
+        Syllabus syllabus;
 
         //Log Information
         //Log.i(TAG, "User references saved successfully");
