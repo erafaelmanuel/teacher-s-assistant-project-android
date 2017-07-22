@@ -8,6 +8,7 @@ public class Syllabus {
 
     private int id;
     private double attendance;
+    private double activity;
 
 
 }
