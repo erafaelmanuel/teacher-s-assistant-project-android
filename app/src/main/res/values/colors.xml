@@ -9,6 +9,13 @@
     <color name="colorWhite">#FFF</color>
     <color name="colorGray">#9e9e9b</color>
     <color name="colorDarkGray">#81817d</color>
+<<<<<<< HEAD
     <color name="colorPrimarySecond">#34495e</color>
     <color name="colorPrimaryDarkSecond">#2c3e50</color>
+=======
+    <color name="colorPrimarySecond">#a3aaf1</color>
+    <color name="colorPrimaryDarkSecond">#30423b</color>
+    <color name="colorPrimaryThird">#2dbda6</color>
+    <color name="colorPrimaryDarkThird">#19806f</color>
+>>>>>>> 9b2f88b0f86ebd73a663c12a4311d1140ab317a6
 </resources>
