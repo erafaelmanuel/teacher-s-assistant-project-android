@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimary">#5451e2</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#F50057</color>
     <color name="colorError">#f43e3e</color>
@@ -9,6 +9,6 @@
     <color name="colorWhite">#FFF</color>
     <color name="colorGray">#9e9e9b</color>
     <color name="colorDarkGray">#81817d</color>
-    <color name="colorPrimarySecond">#1c6c2e</color>
+    <color name="colorPrimarySecond">#a3aaf1</color>
     <color name="colorPrimaryDarkSecond">#30423b</color>
 </resources>
