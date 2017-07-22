@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LoginActivity"
+            android:name=".MainActivity"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,7 +19,7 @@
         </activity>
         <activity android:name=".DummyActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".MainActivity" android:launchMode="singleTask" />
+        <activity android:name=".LoginActivity" android:launchMode="singleTask" />
     </application>
 
 </manifest>

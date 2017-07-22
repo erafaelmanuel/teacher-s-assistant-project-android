@@ -104,8 +104,8 @@ public class DummyActivity extends AppCompatActivity {
 //        Toast.makeText(this, helper.getAllStudent().size() + "", Toast.LENGTH_LONG)
 //        .show();
 
-        ScheduleDatabaseHelper scheduleDatabaseHelper = new ScheduleDatabaseHelper(this);
-        scheduleDatabaseHelper.addSchedule(null);
+//        ScheduleDatabaseHelper scheduleDatabaseHelper = new ScheduleDatabaseHelper(this);
+//        scheduleDatabaseHelper.addSchedule(null);
         //saveUserDetail("", "");
         //goToNextActiviy(null, LoginActivity.class);
 
