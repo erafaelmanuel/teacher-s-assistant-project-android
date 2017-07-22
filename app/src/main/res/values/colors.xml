@@ -11,4 +11,6 @@
     <color name="colorDarkGray">#81817d</color>
     <color name="colorPrimarySecond">#1c6c2e</color>
     <color name="colorPrimaryDarkSecond">#30423b</color>
+    <color name="colorPrimaryThird">#2dbda6</color>
+    <color name="colorPrimaryDarkThird">#19806f</color>
 </resources>
