@@ -2,11 +2,6 @@
 <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-<<<<<<< HEAD
     android:background="@color/colorPrimary"
-=======
-    android:background="@color/colorPrimarySecond"
->>>>>>> 6a8a95ae5f6d55675a4a9655063fc5298446fd2a
     android:titleTextColor="@color/colorWhite">
-
 </android.support.v7.widget.Toolbar>

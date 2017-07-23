@@ -14,7 +14,7 @@
         android:layout_width="100dp"
         android:layout_gravity="center|top"
         android:layout_margin="75dp"
-        app:backgroundTint="@color/coloWetAsphalt"/>
+        app:backgroundTint="@color/colorWetAsphalt"/>
 
     <LinearLayout
         android:id="@+id/activity_login_header"
