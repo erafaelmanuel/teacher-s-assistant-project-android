@@ -1,17 +1,17 @@
 <resources>
 
     <style name="AppTheme" parent="AppTheme.Base">
-
     </style>
 
     <!-- Base application theme. -->
-    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme.Base" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimarySecond</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDarkSecond</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="textColorError">@color/colorError</item>
         <item name="android:textColorPrimary">@color/colorWhite</item>
+        <item name="android:textColorHint">@color/colorWhite</item>
     </style>
 
 </resources>

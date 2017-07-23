@@ -1,40 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/fragment_register_fname_layout"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true">
 
         <EditText
             android:id="@+id/fragment_register_text_firstname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:hint="@string/fragment_register_text_firstname"
             android:inputType="textPersonName" />
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/fragment_register_lname_layout"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/fragment_register_fname_layout"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true">
 
         <EditText
             android:id="@+id/fragment_register_text_lastname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-
             android:hint="@string/fragment_register_text_lastname"
             android:inputType="textPersonName" />
 
@@ -42,17 +38,16 @@
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/fragment_register_email_layout"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/fragment_register_lname_layout"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true">
 
         <EditText
             android:id="@+id/fragment_register_text_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:hint="@string/fragment_register_button_email"
             android:inputType="textEmailAddress" />
 
@@ -60,17 +55,16 @@
 
     <android.support.design.widget.TextInputLayout
         android:id="@+id/fragment_register_password_layout"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/fragment_register_email_layout"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true">
 
         <EditText
             android:id="@+id/fragment_register_text_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:hint="@string/fragment_register_text_password"
             android:inputType="textPassword" />
     </android.support.design.widget.TextInputLayout>
@@ -78,19 +72,20 @@
 
     <Button
         android:id="@+id/fragment_register_button_register"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/fragment_register_password_layout"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="40dp"
+        android:layout_centerHorizontal="true"
         android:height="70dp"
         android:text="@string/fragment_register_button_register"
         android:theme="@style/AppTheme.Base.Button.Normal" />
 
     <Button
         android:id="@+id/fragment_register_button_cancel"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/fragment_register_button_register"
         android:layout_marginLeft="20dp"
@@ -98,6 +93,7 @@
         android:layout_marginTop="0dp"
         android:height="70dp"
         android:text="@string/fragment_register_button_cancel"
+        android:layout_centerHorizontal="true"
         android:theme="@style/AppTheme.Base.Button.Reverse" />
 
 </RelativeLayout>

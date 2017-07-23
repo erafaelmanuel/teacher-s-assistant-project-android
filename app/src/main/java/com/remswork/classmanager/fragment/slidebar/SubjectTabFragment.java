@@ -13,15 +13,14 @@ import com.remswork.classmanager.R;
  * Created by Verlie on 7/22/2017.
  */
 
-public class ScheduleFragment extends Fragment{
-
-    public ScheduleFragment(){
+public class SubjectTabFragment extends Fragment{
+    public SubjectTabFragment(){
         super();
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_slidebar_schedule, container, false);
+        return inflater.inflate(R.layout.fragment_slidebar_subject, container, false);
     }
 }

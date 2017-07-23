@@ -6,6 +6,7 @@ package com.remswork.classmanager.model.grade;
 
 public class Syllabus {
 
+
     private int id;
     private double assignment;
     private double attendance;
@@ -16,7 +17,6 @@ public class Syllabus {
     private double performance;
     private double quiz;
     private double recitation;
-
 
     private Syllabus(){
         super();

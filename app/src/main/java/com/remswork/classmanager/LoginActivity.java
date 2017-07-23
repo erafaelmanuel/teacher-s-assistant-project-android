@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.remswork.classmanager.fragment.LoginFragment;
@@ -29,6 +30,7 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         teacherService = new TeacherServiceImpl(this);
+        Log.i("TESTAG",teacherService.getListOfTeacher().size() + "");
     }
 
     @Override

@@ -10,12 +10,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.remswork.classmanager.adapter.SlideBarViewPagerAdapter;
 import com.remswork.classmanager.fragment.slidebar.ClazzFragment;
-import com.remswork.classmanager.fragment.slidebar.ScheduleFragment;
+import com.remswork.classmanager.fragment.slidebar.SlideBarScheduleFragment;
 import com.remswork.classmanager.fragment.slidebar.StudentFragment;
-import com.remswork.classmanager.fragment.slidebar.SubjectFragment;
+import com.remswork.classmanager.fragment.slidebar.SubjectTabFragment;
 
 import java.util.HashMap;
 
@@ -28,13 +29,10 @@ public class MainActivity extends AppCompatActivity {
     public void initializeWidget(){
         customToolbar = (Toolbar) findViewById(R.id.activity_main_custom_toolbar);
         customToolbar.setTitle("Class Manager");
-
-
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
+        viewPager = (ViewPager) findViewById(R.id.activity_main_viewpager);
+        tabLayout = (TabLayout) findViewById(R.id.activity_main_tab);
 
         setSupportActionBar(customToolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
     }
@@ -57,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
         switch(item.getItemId()){
             case R.id.menu_item_logout :
                 clickLogOut();
+                break;
+            case android.R.id.home :
+                Toast.makeText(this, item.getTitle(), Toast.LENGTH_LONG).show();
                 break;
             default:
                 break;
@@ -87,9 +88,9 @@ public class MainActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         SlideBarViewPagerAdapter slideBarViewPagerAdapter = new SlideBarViewPagerAdapter(
                 getSupportFragmentManager());
-        slideBarViewPagerAdapter.addFrag(new ScheduleFragment(), "Schedule");
+        slideBarViewPagerAdapter.addFrag(new SlideBarScheduleFragment(), "Schedule");
         slideBarViewPagerAdapter.addFrag(new ClazzFragment(), "Class");
-        slideBarViewPagerAdapter.addFrag(new SubjectFragment(), "Subject");
+        slideBarViewPagerAdapter.addFrag(new SubjectTabFragment(), "Subject");
         slideBarViewPagerAdapter.addFrag(new StudentFragment(), "Student");
         viewPager.setAdapter(slideBarViewPagerAdapter);
     }

@@ -40,4 +40,7 @@ public class SlideBarViewPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         return listOfTitle.get(position);
     }
+
+
+
 }

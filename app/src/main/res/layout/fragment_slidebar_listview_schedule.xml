@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginLeft="6dp"
+        android:background="@drawable/custom_ripple">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:id="@+id/fragment_slidebar_listview_schedule_imageview"/>
+
+        <TextView
+            android:text="Subject Name"
+            android:id="@+id/fragment_slidebar_listview_schedule_text_subject"
+            android:layout_width="200dp"
+            android:layout_height="30dp"
+            android:textSize="18sp"
+            android:textColor="@color/colorMidNightBlue"
+            android:layout_marginLeft="85dp"
+            android:layout_marginTop="16dp"/>
+
+        <TextView
+            android:text="1A / Room CS 104 / 12:00 PM - 1:00 PM"
+            android:id="@+id/fragment_slidebar_listview_schedule_text_schedule"
+            android:layout_width="300dp"
+            android:layout_height="30dp"
+            android:textSize="14sp"
+            android:textColor="@color/colorMidNightBlue"
+            android:layout_marginLeft="85dp"
+            android:layout_marginTop="45dp"/>
+    </RelativeLayout>
+
+</LinearLayout>
