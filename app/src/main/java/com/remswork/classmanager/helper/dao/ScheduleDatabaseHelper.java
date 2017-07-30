@@ -18,7 +18,7 @@ import java.util.List;
 
 public class ScheduleDatabaseHelper extends DatabaseHelper {
 
-    private static final String TABLE_NAME = "tbl_schedule";
+    protected static final String TABLE_NAME = "tbl_schedule";
     private static final String COL_1 = "id";
     private static final String COL_2 = "day";
     private static final String COL_3 = "time";

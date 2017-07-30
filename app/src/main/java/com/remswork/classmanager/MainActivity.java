@@ -21,6 +21,11 @@ import com.remswork.classmanager.fragment.slidebar.SlideBarSubjectFragment;
 import com.remswork.classmanager.fragment.slidebar.SliderBarClazzFragment;
 import com.remswork.classmanager.fragment.slidebar.StudentFragment;
 import com.remswork.classmanager.helper.dao.ClazzDatabaseHelper;
+import com.remswork.classmanager.helper.dao.DatabaseHelper;
+import com.remswork.classmanager.helper.dao.ScheduleDatabaseHelper;
+import com.remswork.classmanager.helper.dao.SectionDatabaseHelper;
+import com.remswork.classmanager.helper.dao.SubjectDatabaseHelper;
+import com.remswork.classmanager.helper.dao.TeacherDatabaseHelper;
 import com.remswork.classmanager.helper.service.SubjectService;
 import com.remswork.classmanager.helper.service.impl.SubjectServiceImpl;
 import com.remswork.classmanager.model.clazz.Clazz;
@@ -72,6 +77,24 @@ public class MainActivity extends AppCompatActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case R.id.menu_item_logout :
+                clickLogOut();
+                break;
+            case R.id.menu_item_fr :
+                new TeacherDatabaseHelper(this).onUpgrade(new TeacherDatabaseHelper(this)
+                        .getWritableDatabase(), DatabaseHelper.VERSION-1,
+                        DatabaseHelper.VERSION);
+                new ScheduleDatabaseHelper(this).onUpgrade(new ScheduleDatabaseHelper(this)
+                                .getWritableDatabase(), DatabaseHelper.VERSION-1,
+                        DatabaseHelper.VERSION);
+                new SectionDatabaseHelper(this).onUpgrade(new SectionDatabaseHelper(this)
+                                .getWritableDatabase(), DatabaseHelper.VERSION-1,
+                        DatabaseHelper.VERSION);
+                new ClazzDatabaseHelper(this).onUpgrade(new ClazzDatabaseHelper(this)
+                                .getWritableDatabase(), DatabaseHelper.VERSION-1,
+                        DatabaseHelper.VERSION);
+                new SubjectDatabaseHelper(this).onUpgrade(new SubjectDatabaseHelper(this)
+                                .getWritableDatabase(), DatabaseHelper.VERSION-1,
+                        DatabaseHelper.VERSION);
                 clickLogOut();
                 break;
             case android.R.id.home :

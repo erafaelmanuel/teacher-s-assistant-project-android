@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 
 import com.remswork.classmanager.exception.ClazzDatabaseHelperException;
-import com.remswork.classmanager.exception.SubjectDatabaseHelperException;
 import com.remswork.classmanager.helper.service.ScheduleService;
 import com.remswork.classmanager.helper.service.SectionService;
 import com.remswork.classmanager.helper.service.SubjectService;
@@ -29,8 +28,6 @@ import com.remswork.classmanager.model.grade.Term;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.R.attr.id;
 
 /**
  * Created by Rafael on 7/18/2017.
@@ -83,7 +80,7 @@ public class ClazzDatabaseHelper extends DatabaseHelper {
 
     public boolean addClazz(Clazz clazz){
         try{
-            onUpgrade(getWritableDatabase(),VERSION-1, VERSION);
+           //onUpgrade(getWritableDatabase(),VERSION-1, VERSION);
 
             //Temporary
             int id =(int) (Math.random() * 900000);
@@ -99,7 +96,7 @@ public class ClazzDatabaseHelper extends DatabaseHelper {
             //Temp but not
             sectionService.addSection(section);
             //Temp and yes
-            scheduleDatabaseHelper.onUpgrade(getWritableDatabase(),VERSION-1, VERSION);
+           // scheduleDatabaseHelper.onUpgrade(getWritableDatabase(),VERSION-1, VERSION);
             for(Schedule schedule : clazz.getListOfSchedule()){
                 schedule.setClazzId(id);
                 scheduleDatabaseHelper.addSchedule(schedule);

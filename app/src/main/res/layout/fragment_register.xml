@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -8,8 +9,9 @@
         android:id="@+id/fragment_register_fname_layout"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:layout_centerHorizontal="true">
+        app:theme="@style/AppTheme.Stylex.TIL">
 
         <EditText
             android:id="@+id/fragment_register_text_firstname"
@@ -24,8 +26,9 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/fragment_register_fname_layout"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true">
+        app:theme="@style/AppTheme.Stylex.TIL">
 
         <EditText
             android:id="@+id/fragment_register_text_lastname"
@@ -41,8 +44,9 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/fragment_register_lname_layout"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true">
+        app:theme="@style/AppTheme.Stylex.TIL">
 
         <EditText
             android:id="@+id/fragment_register_text_email"
@@ -58,8 +62,9 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/fragment_register_email_layout"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
-        android:layout_centerHorizontal="true">
+        app:theme="@style/AppTheme.Stylex.TIL">
 
         <EditText
             android:id="@+id/fragment_register_text_password"
@@ -75,10 +80,10 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/fragment_register_password_layout"
+        android:layout_centerHorizontal="true"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="40dp"
-        android:layout_centerHorizontal="true"
         android:height="70dp"
         android:text="@string/fragment_register_button_register"
         android:theme="@style/AppTheme.Base.Button.Normal" />
@@ -88,12 +93,12 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/fragment_register_button_register"
+        android:layout_centerHorizontal="true"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="0dp"
         android:height="70dp"
         android:text="@string/fragment_register_button_cancel"
-        android:layout_centerHorizontal="true"
         android:theme="@style/AppTheme.Base.Button.Reverse" />
 
 </RelativeLayout>

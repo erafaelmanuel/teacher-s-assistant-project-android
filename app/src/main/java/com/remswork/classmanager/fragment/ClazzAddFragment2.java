@@ -6,11 +6,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +25,6 @@ import android.widget.TimePicker;
 
 import com.remswork.classmanager.R;
 import com.remswork.classmanager.helper.dao.ClazzDatabaseHelper;
-import com.remswork.classmanager.helper.service.SectionService;
 import com.remswork.classmanager.helper.service.SubjectService;
 import com.remswork.classmanager.helper.service.impl.SubjectServiceImpl;
 import com.remswork.classmanager.model.clazz.Clazz;
@@ -38,7 +37,6 @@ import com.remswork.classmanager.utils.TeacherUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import static com.remswork.classmanager.utils.StringFormatter.getToDate;
 
@@ -62,9 +60,13 @@ public class ClazzAddFragment2 extends Fragment implements View.OnClickListener,
     private List<Schedule> mSchedules;
     private RecyclerView mScheduleLayout;
     private ClazzAddFragment2Adapter adapter;
+    private TextView mHeaderText;
     private EditText mSectionNameText;
     private EditText mYearText;
     private EditText mDeparmentText;
+    private TextInputLayout mSectionNameTextLayout;
+    private TextInputLayout mYearTextLayout;
+    private TextInputLayout mDeparmentTextLayout;
     private FloatingActionButton mAddFAButton;
     private SubjectService subjectService;
     private ClazzDatabaseHelper clazzDatabaseHelper;
@@ -81,13 +83,20 @@ public class ClazzAddFragment2 extends Fragment implements View.OnClickListener,
         subjectService = new SubjectServiceImpl(getActivity());
         clazzDatabaseHelper = new ClazzDatabaseHelper(getActivity());
 
+        //Schedule list
         mSchedules = new ArrayList<>();
-        mSchedules.add(new Schedule(-1, "TEST", "", 1, "", 1));
+        mSchedules.add(new Schedule(-1, "", "", 1, "", 1));
         adapter = new ClazzAddFragment2Adapter();
 
         mSectionNameText = (EditText) mView.findViewById(R.id.a_class_f_add_text_sec_name);
         mYearText = (EditText) mView.findViewById(R.id.a_class_f_add_text_year);
         mDeparmentText = (EditText) mView.findViewById(R.id.a_class_f_add_text_dep);
+        mSectionNameTextLayout = (TextInputLayout) mView.findViewById(
+                R.id.a_class_f_add_text_sec_name_layout);
+        mYearTextLayout = (TextInputLayout) mView.findViewById(
+                R.id.a_class_f_add_text_year_layout);
+        mDeparmentTextLayout = (TextInputLayout) mView.findViewById(
+                R.id.a_class_f_add_text_dep_layout);
         mAddFAButton = (FloatingActionButton) mView.findViewById(R.id.a_class_f_add_btn_add);
         mAddFAButton.setOnClickListener(this);
 
@@ -120,52 +129,95 @@ public class ClazzAddFragment2 extends Fragment implements View.OnClickListener,
                 getActivity(), android.R.layout.simple_spinner_dropdown_item, arraySubject);
     }
 
+    public boolean isInputValid(){
+        boolean isVaild = true;
+        if(mSectionNameText.getText().toString().trim().equals("")){
+            mSectionNameTextLayout.setError("Please enter a section name");
+            isVaild = false;
+        }else
+            mSectionNameTextLayout.setErrorEnabled(false);
+        if(mYearText.getText().toString().trim().equals("")){
+            mYearTextLayout.setError("Please enter a year");
+            isVaild = false;
+        }else
+            mYearTextLayout.setErrorEnabled(false);
+        if(mDeparmentText.getText().toString().trim().equals("")){
+            mDeparmentTextLayout.setError("Please enter a department name");
+            isVaild = false;
+        }else
+            mDeparmentTextLayout.setErrorEnabled(false);
+
+        return isVaild;
+    }
+
+    public boolean isDialogInputValid(){
+        boolean isValid = true;
+        if(mDurationText.getText().toString().trim().equals("")){
+            mHeaderText.setText("Number of time is required");
+            mHeaderText.setTextColor(getResources().getColor(R.color.colorError));
+            isValid = false;
+        }
+        return  isValid;
+    }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.a_class_f_view_schedule_add:
+                clearDialogInput();
                 mScheduleDialog.show();
                 break;
             case R.id.a_class_f_d_btn_cancel:
                 mScheduleDialog.cancel();
                 break;
             case R.id.a_class_f_d_btn_confirm:
-                if (mSchedules.get(0).getId() == -1)
-                    adapter.deleteItem(0);
-                String day = mDaySpinner.getSelectedItem().toString();
-                String time = getHour() + ":" + getMinute();
-                int numberOfHour = mDurationText.getText().toString().equals("") ? 0 : Integer
-                        .parseInt(mDurationText.getText().toString());
-                String room = mRoomText.getText().toString();
+                //Delete the no schedule item
+                if (isDialogInputValid()){
+                    if (mSchedules.get(0).getId() == -1)
+                        adapter.deleteItem(0);
 
-                Schedule schedule = new Schedule(1, day, StringFormatter.getToDate(time, 0),
-                        numberOfHour, room, 1);
-                adapter.addItem(schedule, adapter.getItemCount());
-                mScheduleDialog.cancel();
-                break;
-            case R.id.a_class_f_add_btn_add :
-                Teacher teacher = TeacherUtil.getTeacher();
-
-                for(Schedule s : mSchedules){
-                    if(s.getId() == -1){
-                        mSchedules.remove(s);
-                    }
+                    //Set schedule
+                    String day = mDaySpinner.getSelectedItem().toString();
+                    String time = getHour() + ":" + getMinute();
+                    int numberOfHour = mDurationText.getText().toString().equals("") ? 0 : Integer
+                            .parseInt(mDurationText.getText().toString());
+                    String room = mRoomText.getText().toString();
+                    Schedule schedule = new Schedule(1, day, StringFormatter.getToDate(time, 0),
+                            numberOfHour, room, 1);
+                    //Add item to adapter
+                    adapter.addItem(schedule, adapter.getItemCount());
+                    //Close the dialog
+                    mScheduleDialog.cancel();
                 }
+                break;
+            case R.id.a_class_f_add_btn_add:
+                if(isInputValid()) {
+                    //Teacher
+                    Teacher teacher = TeacherUtil.getTeacher();
 
-                Section section = new Section();
-                section.setSectionName(mSectionNameText.getText().toString());
-                section.setYear(mYearText.getText().toString() != "" ? Integer.parseInt(mYearText
-                        .getText().toString()) : 0);
-                section.setDepartment(mDeparmentText.getText().toString());
+                    //Schedule
+                    for (Schedule s : mSchedules) {
+                        if (s.getId() == -1) {
+                            mSchedules.remove(s);
+                        }
+                    }
+                    //Section
+                    Section section = new Section();
+                    section.setSectionName(mSectionNameText.getText().toString());
+                    section.setYear(mYearText.getText().toString() != "" ? Integer.parseInt(
+                            mYearText.getText().toString()) : 0);
+                    section.setDepartment(mDeparmentText.getText().toString());
 
-                Clazz clazz = new Clazz();
-                clazz.setSection(section);
-                clazz.setListOfSchedule(mSchedules);
-                clazz.setSubject(subject);
-                clazz.setTeacher(teacher);
-                clazzDatabaseHelper.addClazz(clazz);
+                    //Clazz
+                    Clazz clazz = new Clazz();
+                    clazz.setSection(section);
+                    clazz.setListOfSchedule(mSchedules);
+                    clazz.setSubject(subject);
+                    clazz.setTeacher(teacher);
+                    clazzDatabaseHelper.addClazz(clazz);
 
-                getActivity().finish();
+                    getActivity().finish();
+                }
                 break;
         }
     }
@@ -173,12 +225,14 @@ public class ClazzAddFragment2 extends Fragment implements View.OnClickListener,
     public AlertDialog getScheduleDialog() {
         AlertDialog.Builder mBuilder = new AlertDialog.Builder(getActivity());
         View view = mLayoutInflater.inflate(R.layout.activity_clazz_schedule_add_dialog, null);
+        mHeaderText = (TextView) view.findViewById(R.id.a_class_f_d_add_text_header);
         mTimePicker = (TimePicker) view.findViewById(R.id.a_class_f_d_add_timepicker);
         mDaySpinner = (Spinner) view.findViewById(R.id.a_class_f_d_add_spinnerDay);
         mConfirmButton = (Button) view.findViewById(R.id.a_class_f_d_btn_confirm);
         mCancelButton = (Button) view.findViewById(R.id.a_class_f_d_btn_cancel);
         mDurationText = (EditText) view.findViewById(R.id.a_class_f_d_text_duration);
         mRoomText = (EditText) view.findViewById(R.id.a_class_f_d_text_room);
+
         String days[] = new String[7];
         days[0] = "Sunday";
         days[1] = "Monday";
@@ -195,6 +249,14 @@ public class ClazzAddFragment2 extends Fragment implements View.OnClickListener,
         mConfirmButton.setOnClickListener(this);
         mBuilder.setView(view);
         return mBuilder.create();
+    }
+
+    public void clearDialogInput(){
+        mHeaderText.setText("Manage your schedule");
+        mHeaderText.setTextColor(getResources().getColor(R.color.colorWhite));
+        mDurationText.setText("");
+        mRoomText.setText("");
+        mDaySpinner.setSelection(0);
     }
 
     public int getHour() {

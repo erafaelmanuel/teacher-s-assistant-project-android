@@ -15,17 +15,8 @@ import android.widget.Button;
 
 import com.remswork.classmanager.R;
 import com.remswork.classmanager.adapter.ClazzRecyclerViewAdapter;
-import com.remswork.classmanager.adapter.SubjectRecyclerViewAdapter;
 import com.remswork.classmanager.helper.dao.ClazzDatabaseHelper;
-import com.remswork.classmanager.helper.dao.ScheduleDatabaseHelper;
-import com.remswork.classmanager.helper.service.SectionService;
-import com.remswork.classmanager.helper.service.SubjectService;
-import com.remswork.classmanager.helper.service.TeacherService;
-import com.remswork.classmanager.helper.service.impl.SectionServiceImpl;
-import com.remswork.classmanager.helper.service.impl.SubjectServiceImpl;
-import com.remswork.classmanager.helper.service.impl.TeacherServiceImpl;
 import com.remswork.classmanager.model.clazz.Clazz;
-import com.remswork.classmanager.model.clazz.Subject;
 
 import java.util.List;
 
