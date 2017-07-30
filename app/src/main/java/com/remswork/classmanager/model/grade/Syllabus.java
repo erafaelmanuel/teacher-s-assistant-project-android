@@ -18,7 +18,7 @@ public class Syllabus {
     private double quiz;
     private double recitation;
 
-    private Syllabus(){
+    public Syllabus(){
         super();
     }
 

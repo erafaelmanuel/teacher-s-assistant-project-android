@@ -56,13 +56,18 @@ public class SectionDatabaseHelper extends DatabaseHelper {
             contentValues.put(COL_3, section.getYear());
             contentValues.put(COL_4, section.getDepartment());
 
-            if(db.insert(TABLE_NAME, null, contentValues) != -1)
+            if(getSectionById(section.getId()) == null) {
+                db.insertOrThrow(TABLE_NAME, null, contentValues);
                 return true;
-            else
-                throw new SectionDatabaseHelperException("Section can't be added");
+            }else
+                throw new SectionDatabaseHelperException(
+                        "Section already exist with ID : " + section.getId());
+        }catch (SQLiteException e){
+            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
+            e.printStackTrace();
+            return false;
         }catch (SectionDatabaseHelperException e){
             e.printStackTrace();
-            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
             return false;
         }
     }

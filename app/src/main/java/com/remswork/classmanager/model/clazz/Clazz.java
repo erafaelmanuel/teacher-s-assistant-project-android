@@ -1,6 +1,5 @@
 package com.remswork.classmanager.model.clazz;
 
-import com.remswork.classmanager.model.grade.Syllabus;
 import com.remswork.classmanager.model.grade.Term;
 
 import java.util.ArrayList;
@@ -19,7 +18,6 @@ public class Clazz {
     private List<Schedule> listOfSchedule;
     private String termType;
     private List<Term> listOfTerm;
-    private Syllabus syllabus;
 
     public Clazz() {
         super();
@@ -28,9 +26,18 @@ public class Clazz {
     }
 
     public Clazz(int id, Teacher teacher, Subject subject, Section section,
-                 List<Schedule> listOfSchedule, String termType, List<Term> listOfTerm,
-                 Syllabus syllabus) {
+                 String termType, List<Term> listOfTerm) {
         this();
+        this.id = id;
+        this.teacher = teacher;
+        this.subject = subject;
+        this.section = section;
+        this.termType = termType;
+        this.listOfTerm = listOfTerm;
+    }
+
+    public Clazz(int id, Teacher teacher, Subject subject, Section section,
+                 List<Schedule> listOfSchedule, String termType, List<Term> listOfTerm) {
         this.id = id;
         this.teacher = teacher;
         this.subject = subject;
@@ -38,7 +45,6 @@ public class Clazz {
         this.listOfSchedule = listOfSchedule;
         this.termType = termType;
         this.listOfTerm = listOfTerm;
-        this.syllabus = syllabus;
     }
 
     public int getId() {
@@ -105,13 +111,6 @@ public class Clazz {
         listOfTerm.add(term);
     }
 
-    public Syllabus getSyllabus() {
-        return syllabus;
-    }
-
-    public void setSyllabus(Syllabus syllabus) {
-        this.syllabus = syllabus;
-    }
 
     @Override
     public String toString() {
@@ -123,7 +122,6 @@ public class Clazz {
                 ", listOfSchedule=" + listOfSchedule +
                 ", termType='" + termType + '\'' +
                 ", listOfTerm=" + listOfTerm +
-                ", syllabus=" + syllabus +
                 '}';
     }
 }

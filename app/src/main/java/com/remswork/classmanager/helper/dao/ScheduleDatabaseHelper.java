@@ -25,6 +25,7 @@ public class ScheduleDatabaseHelper extends DatabaseHelper {
     private static final String COL_4 = "hour";
     private static final String COL_5 = "room";
     private static final String COL_6 = "class_id";
+    private static final String COL_7 = "subject_name";
 
     public ScheduleDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, VERSION);
@@ -34,8 +35,8 @@ public class ScheduleDatabaseHelper extends DatabaseHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String query = String.format("CREATE TABLE IF NOT EXISTS '%s' (%s INTEGER PRIMARY KEY " +
-                "AUTOINCREMENT, %s TEXT, %s TEXT, %s INTEGER, %s TEXT, %s INTEGER);",
-                TABLE_NAME, COL_1, COL_2, COL_3, COL_4, COL_5, COL_6);
+                "AUTOINCREMENT, %s TEXT, %s TEXT, %s INTEGER, %s TEXT, %s INTEGER, %s TEXT);",
+                TABLE_NAME, COL_1, COL_2, COL_3, COL_4, COL_5, COL_6, COL_7);
         db.execSQL(query);
     }
 
@@ -119,7 +120,7 @@ public class ScheduleDatabaseHelper extends DatabaseHelper {
             e.printStackTrace();
             return null;
         }catch (ScheduleDatabaseHelperException e){
-            e.printStackTrace();
+            //e.printStackTrace();
             return null;
         }
     }
@@ -148,6 +149,52 @@ public class ScheduleDatabaseHelper extends DatabaseHelper {
                 } else
                     throw new ScheduleDatabaseHelperException(
                             "No schedule found with CLass ID : " + classId);
+            }catch (RuntimeException e){
+                throw new SQLiteException("Schedule table encountered an unknown error");
+            }
+        }catch (SQLiteException e) {
+            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
+            e.printStackTrace();
+            return listOfSchedule;
+        }catch (ScheduleDatabaseHelperException e){
+            e.printStackTrace();
+            return listOfSchedule;
+        }
+    }
+
+    public List<Schedule> getScheduleByTeacherId(final int teacherId){
+        List<Schedule> listOfSchedule = new ArrayList<Schedule>();
+        try{
+            String query = String.format("SELECT SE.%s, SE.%s, SE.%s, SE.%s, SE.%s, SE.%s, SU.%s " +
+                    "FROM %s as T JOIN %s as C ON T.%s = C.%s " +
+                    "JOIN %s as SU ON C.%s = SU.%s JOIN %s as SE ON C.%s = SE.%s WHERE T.%s = ?;",
+                    COL_1, COL_2, COL_3, COL_4, COL_5, COL_6, SubjectDatabaseHelper.COL_2,
+                    TeacherDatabaseHelper.TABLE_NAME, ClazzDatabaseHelper.TABLE_NAME,
+                    TeacherDatabaseHelper.COL_1, ClazzDatabaseHelper.COL_2, SubjectDatabaseHelper
+                            .TABLE_NAME, ClazzDatabaseHelper.COL_3, SubjectDatabaseHelper.COL_1,
+                    TABLE_NAME, ClazzDatabaseHelper.COL_1, COL_6, TeacherDatabaseHelper.COL_1);
+
+            String args[] = new String[]{String.valueOf(teacherId)};
+            SQLiteDatabase db = getWritableDatabase();
+            Cursor cursor = db.rawQuery(query, args);
+            try {
+                if (cursor.getCount() > 0) {
+                    while (cursor.moveToNext()) {
+                        Schedule schedule = new Schedule();
+                        schedule.setId(cursor.getInt(0));
+                        schedule.setDay(cursor.getString(1));
+                        schedule.setTime(cursor.getString(2));
+                        schedule.setHour(cursor.getInt(3));
+                        schedule.setRoom(cursor.getString(4));
+                        schedule.setClazzId(cursor.getInt(5));
+                        schedule.setSubjectName(cursor.getString(6));
+                        listOfSchedule.add(schedule);
+                    }
+                    cursor.close();
+                    return listOfSchedule;
+                } else
+                    throw new ScheduleDatabaseHelperException(
+                            "No schedule found with Teacher ID : " + teacherId);
             }catch (RuntimeException e){
                 throw new SQLiteException("Schedule table encountered an unknown error");
             }

@@ -12,6 +12,7 @@ import com.remswork.classmanager.fragment.LoginFragment;
 import com.remswork.classmanager.model.clazz.Teacher;
 import com.remswork.classmanager.helper.service.TeacherService;
 import com.remswork.classmanager.helper.service.impl.TeacherServiceImpl;
+import com.remswork.classmanager.utils.TeacherUtil;
 
 import java.util.HashMap;
 
@@ -37,7 +38,10 @@ public class LoginActivity extends AppCompatActivity implements LoginFragment
     protected void onResume() {
         super.onResume();
         if((boolean) loadUserDetail().get("isSuccess")){
-            activityStart((Teacher) loadUserDetail().get("getTeacher"), MainActivity.class);
+            activityStart(
+                    TeacherUtil.putTeacher(
+                            (Teacher) loadUserDetail().get("getTeacher")
+                    ), MainActivity.class);
         }
     }
 

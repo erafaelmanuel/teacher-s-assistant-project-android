@@ -18,4 +18,9 @@
     <color name="colorSilver">#bdc3c7</color>
     <color name="colorCarot">#e67e22</color>
     <color name="colorPumpkin">#d35400</color>
+    <color name="colorMoca1">#7e7c7d</color>
+    <color name="colorMoca2">#b1afb0</color>
+    <color name="colorMoca3">#f1eff0</color>
+    <color name="colorTweeterBlue">#3dc4f1</color>
+    <color name="colorTweeterBlueDark">#0a91be</color>
 </resources>

@@ -15,6 +15,7 @@ public interface ScheduleService {
     int addSchedule(Schedule... schedules);
     Schedule getScheduleById(int id);
     List<Schedule> getScheduleByClazzId(int classId);
+    List<Schedule> getScheduleByTeacherId(int teacherId);
     List<Schedule> getAllSchedule();
     boolean updateScheduleById(int id, Schedule newSchedule);
     int updateScheduleByClassId(int classId, Schedule newSchedule);

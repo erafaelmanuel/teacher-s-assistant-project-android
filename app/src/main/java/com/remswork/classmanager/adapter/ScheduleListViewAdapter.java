@@ -10,14 +10,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.remswork.classmanager.R;
+import com.remswork.classmanager.helper.dao.ClazzDatabaseHelper;
 import com.remswork.classmanager.model.clazz.Schedule;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Rafael on 7/23/2017.
  */
 
+@Deprecated
 public class ScheduleListViewAdapter extends ArrayAdapter<Schedule> {
 
     private List<Schedule> schedules;
@@ -25,9 +28,12 @@ public class ScheduleListViewAdapter extends ArrayAdapter<Schedule> {
     private TextView subjectNameTextView;
     private TextView scheduleTextView;
 
+    private ClazzDatabaseHelper clazzDatabaseHelper;
+
     public ScheduleListViewAdapter(Context context, List<Schedule> schedules) {
         super(context, R.layout.fragment_slidebar_listview_schedule, schedules);
         this.schedules = schedules;
+        clazzDatabaseHelper = new ClazzDatabaseHelper(context);
     }
 
     @NonNull
@@ -46,28 +52,29 @@ public class ScheduleListViewAdapter extends ArrayAdapter<Schedule> {
                 R.id.fragment_slidebar_listview_schedule_text_schedule);
 
         imageView.setImageResource(setUpImageResourceForDay(schedule.getDay()));
-        subjectNameTextView.setText("Java Programming");
+        subjectNameTextView.setText(
+                clazzDatabaseHelper.getClazzById(schedule.getClazzId()).getSubject().getName());
 
-        scheduleTextView.setText("1A / " + schedule.getRoom() + " / " + getToDate(
-                schedule.getTime(), schedule.getHour()));
+        scheduleTextView.setText("1A / " + schedule.getRoom() + " / " + schedule.getTime() +
+                " - " + getToDate(schedule.getTime(), schedule.getHour()));
         return customView;
     }
 
     public int setUpImageResourceForDay(final String day){
         if(day.equalsIgnoreCase("monday"))
-            return R.drawable.logo_monday;
+            return R.drawable.logo_day_monday;
         else if(day.equalsIgnoreCase("tuesday"))
-            return R.drawable.logo_tuesday;
+            return R.drawable.logo_day_tuesday;
         else if(day.equalsIgnoreCase("wednesday"))
-            return R.drawable.logo_wednesday;
+            return R.drawable.logo_day_wednesday;
         else if(day.equalsIgnoreCase("thursday"))
-            return R.drawable.logo_thursday;
+            return R.drawable.logo_day_thursday;
         else if(day.equalsIgnoreCase("friday"))
-            return R.drawable.logo_friday;
+            return R.drawable.logo_day_friday;
         else if(day.equalsIgnoreCase("saturday"))
-            return R.drawable.logo_saturday;
+            return R.drawable.logo_day_saturday;
         else
-            return R.drawable.logo_sunday;
+            return R.drawable.logo_day_sunday;
     }
 
     public String getToDate(final String time, final int numberOfHour){
@@ -80,8 +87,8 @@ public class ScheduleListViewAdapter extends ArrayAdapter<Schedule> {
             hour += (int) (minute >= 60 ? minute / 60 : 0);
             minute %= 60;
 
-            return String.format("%s:%02d %s", (hour <= 12 ? hour : hour % 12), minute,
-                    (hour > 12 ? "PM" : "AM"));
+            return String.format(Locale.ENGLISH, "%s:%02d %s", (hour <= 12 ? hour : hour % 12),
+                    minute, (hour > 12 ? "PM" : "AM"));
         }catch (NumberFormatException e){
             return "Time not set";
         }

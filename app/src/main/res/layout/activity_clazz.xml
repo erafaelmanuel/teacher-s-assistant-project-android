@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.remswork.classmanager.ClazzActivity"
+    android:background="@color/colorMoca3">
+
+    <include layout="@layout/custom_toolbar"
+        android:id="@+id/activity_clazz_custom_toolbar">
+    </include>
+
+    <RelativeLayout
+        android:id="@+id/activity_clazz_fragment_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </RelativeLayout>
+
+</LinearLayout>

@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorMoca3">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/activity_subject_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="true">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@color/colorMoca3"
+                    android:orientation="horizontal"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/activity_subject_hint_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hint : Subject 'Title' and 'Description' are required."
+                        android:textColor="@color/colorMoca1"
+                        android:layout_gravity="center|left"/>
+
+                    <ImageView
+                        android:id="@+id/activity_subject_hint_button"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/icon_error"
+                        android:layout_gravity="center|right"
+                        android:clickable="true"/>
+
+                </FrameLayout>
+            </android.support.v7.widget.CardView>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/activity_subject_hint">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:padding="20dp">
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/frament_subject_view_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="true"
+                        card_view:cardElevation="3dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/colorTweeterBlue"
+                            android:orientation="horizontal"
+                            android:padding="10dp">
+
+                            <ImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/icon_label" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:orientation="vertical">
+
+                                <android.support.design.widget.TextInputLayout
+                                    android:id="@+id/fragment_subject_add_text_title_layout"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:hintTextAppearance="@style/AppTheme.Stylex.TIL"
+                                    app:theme="@style/AppTheme.Stylex.TIL"
+                                    app:errorTextAppearance="@style/AppTheme.Stylex.TIL">
+
+                                    <EditText
+                                        android:id="@+id/fragment_subject_add_text_title"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:width="250dp"
+                                        android:backgroundTint="@color/colorWhite"
+                                        android:hint="Title"
+                                        android:inputType="text"
+                                        android:textColor="@color/colorWhite"
+                                        android:textSize="18sp" />
+
+                                </android.support.design.widget.TextInputLayout>
+
+                            </LinearLayout>
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/frament_subject_view_description"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/frament_subject_view_title"
+                        android:layout_marginTop="10dp"
+                        card_view:cardElevation="3dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/colorWetAsphalt"
+                            android:orientation="horizontal"
+                            android:padding="10dp">
+
+                            <ImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/icon_description" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:orientation="vertical">
+
+                                <android.support.design.widget.TextInputLayout
+                                    android:id="@+id/fragment_subject_add_text_description_layout"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:hintTextAppearance="@style/AppTheme.Stylex.TIL"
+                                    app:theme="@style/AppTheme.Stylex.TIL"
+                                    app:errorTextAppearance="@style/AppTheme.Stylex.TIL">
+
+                                    <EditText
+                                        android:id="@+id/fragment_subject_add_text_description"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:width="250dp"
+                                        android:backgroundTint="@color/colorWhite"
+                                        android:hint="Description"
+                                        android:inputType="text"
+                                        android:textColor="@color/colorWhite"
+                                        android:textSize="18sp" />
+                                </android.support.design.widget.TextInputLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/frament_subject_view_code"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/frament_subject_view_description"
+                        android:layout_marginTop="10dp"
+                        card_view:cardElevation="3dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/colorMoca2"
+                            android:orientation="horizontal"
+                            android:padding="10dp">
+
+                            <ImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/icon_code_fork" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:orientation="vertical">
+
+                                <android.support.design.widget.TextInputLayout
+                                    android:id="@+id/fragment_subject_add_text_code_layout"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:hintTextAppearance="@style/AppTheme.Stylex.TIL"
+                                    app:theme="@style/AppTheme.Stylex.TIL"
+                                    app:errorTextAppearance="@style/AppTheme.Stylex.TIL">
+
+                                    <EditText
+                                        android:id="@+id/fragment_subject_add_text_code"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:width="250dp"
+                                        android:backgroundTint="@color/colorWhite"
+                                        android:hint="Code"
+                                        android:inputType="text"
+                                        android:textColor="@color/colorWhite"
+                                        android:textSize="18sp" />
+                                </android.support.design.widget.TextInputLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/frament_subject_view_unit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/frament_subject_view_code"
+                        android:layout_marginTop="10dp"
+                        card_view:cardElevation="3dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/colorTweeterBlue"
+                            android:orientation="horizontal"
+                            android:padding="10dp">
+
+                            <ImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/icon_ls_unit" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:orientation="vertical">
+
+                                <android.support.design.widget.TextInputLayout
+                                    android:id="@+id/fragment_subject_add_text_unit_layout"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:hintTextAppearance="@style/AppTheme.Stylex.TIL"
+                                    app:theme="@style/AppTheme.Stylex.TIL"
+                                    app:errorTextAppearance="@style/AppTheme.Stylex.TIL">
+
+                                    <EditText
+                                        android:id="@+id/fragment_subject_add_text_unit"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:width="250dp"
+                                        android:backgroundTint="@color/colorWhite"
+                                        android:hint="Unit"
+                                        android:inputType="text"
+                                        android:textColor="@color/colorWhite"
+                                        android:textSize="18sp" />
+                                </android.support.design.widget.TextInputLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+
+                    <android.support.v7.widget.CardView
+                        android:id="@+id/frament_subject_view_category"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/frament_subject_view_unit"
+                        android:layout_marginTop="10dp"
+                        card_view:cardElevation="3dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/colorCarot"
+                            android:orientation="horizontal"
+                            android:padding="10dp">
+
+                            <ImageView
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_gravity="center"
+                                android:background="@drawable/icon_category" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:orientation="vertical">
+
+                                <android.support.design.widget.TextInputLayout
+                                    android:id="@+id/fragment_subject_add_text_category_layout"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    app:hintTextAppearance="@style/AppTheme.Stylex.TIL"
+                                    app:theme="@style/AppTheme.Stylex.TIL"
+                                    app:errorTextAppearance="@style/AppTheme.Stylex.TIL">
+
+                                    <EditText
+                                        android:id="@+id/fragment_subject_add_text_category"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:width="250dp"
+                                        android:backgroundTint="@color/colorWhite"
+                                        android:hint="Category"
+                                        android:inputType="text"
+                                        android:textColor="@color/colorWhite"
+                                        android:textSize="18sp" />
+                                </android.support.design.widget.TextInputLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </android.support.v7.widget.CardView>
+
+                    <LinearLayout
+                        android:id="@+id/fragment_subject_advance_option_switch_l"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/frament_subject_view_category"
+                        android:layout_marginTop="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Show advanced options"
+                            android:textColor="@color/colorMidNightBlue"
+                            android:textStyle="bold" />
+
+                        <Switch
+                            android:id="@+id/fragment_subject_advance_option_switch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:theme="@style/AppTheme.Switch" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+            </ScrollView>
+        </RelativeLayout>
+
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fragment_subject_add_subject_save"
+            android:layout_width="65dp"
+            android:layout_height="65dp"
+            android:layout_gravity="bottom|right"
+            android:layout_marginBottom="30dp"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/icon_check"
+            app:backgroundTint="@color/colorMoca1" />
+    </FrameLayout>
+
+</RelativeLayout>

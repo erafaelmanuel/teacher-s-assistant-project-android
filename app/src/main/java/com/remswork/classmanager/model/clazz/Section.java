@@ -1,5 +1,8 @@
 package com.remswork.classmanager.model.clazz;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -7,7 +10,7 @@ import java.util.List;
  * Created by Rem-sama on 7/18/2017.
  */
 
-public class Section {
+public class Section implements Parcelable{
 
     private int id;
     private String sectionName;
@@ -33,6 +36,25 @@ public class Section {
         this(id, sectionName, year, department);
         this.students = students;
     }
+
+    protected Section(Parcel in) {
+        id = in.readInt();
+        sectionName = in.readString();
+        year = in.readInt();
+        department = in.readString();
+    }
+
+    public static final Creator<Section> CREATOR = new Creator<Section>() {
+        @Override
+        public Section createFromParcel(Parcel in) {
+            return new Section(in);
+        }
+
+        @Override
+        public Section[] newArray(int size) {
+            return new Section[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -87,5 +109,18 @@ public class Section {
                 ", department='" + department + '\'' +
                 ", students size=" + students.size() +
                 '}';
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeString(sectionName);
+        dest.writeInt(year);
+        dest.writeString(department);
     }
 }

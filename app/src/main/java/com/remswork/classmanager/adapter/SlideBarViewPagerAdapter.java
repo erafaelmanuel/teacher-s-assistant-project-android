@@ -37,7 +37,7 @@ public class SlideBarViewPagerAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public CharSequence getPageTitle(int position) {
+    public String getPageTitle(int position) {
         return listOfTitle.get(position);
     }
 

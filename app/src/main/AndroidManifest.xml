@@ -19,6 +19,9 @@
         </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".MainActivity" android:launchMode="singleTask" />
+        <activity android:name=".DummyActivity" />
+        <activity android:name=".SubjectActivity" />
+        <activity android:name=".ClazzActivity" />
     </application>
 
 </manifest>

@@ -46,6 +46,11 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
+    public List<Schedule> getScheduleByTeacherId(int teacherId) {
+        return scheduleDatabaseHelper.getScheduleByTeacherId(teacherId);
+    }
+
+    @Override
     public List<Schedule> getAllSchedule() {
         return scheduleDatabaseHelper.getAllSchedule();
     }

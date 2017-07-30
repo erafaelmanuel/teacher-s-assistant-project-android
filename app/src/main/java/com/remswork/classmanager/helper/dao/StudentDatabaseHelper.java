@@ -73,8 +73,8 @@ public class StudentDatabaseHelper extends DatabaseHelper {
                         "Student already exists with ID : " + student.getId());
             }
         }catch (SQLiteException e){
-            e.printStackTrace();
             onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
+            e.printStackTrace();
             return false;
         }catch (StudentDatabaseHelperException e) {
             e.printStackTrace();

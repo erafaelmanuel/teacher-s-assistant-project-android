@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -12,27 +13,42 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.remswork.classmanager.adapter.ClazzRecyclerViewAdapter;
 import com.remswork.classmanager.adapter.SlideBarViewPagerAdapter;
-import com.remswork.classmanager.fragment.slidebar.ClazzFragment;
-import com.remswork.classmanager.fragment.slidebar.SlideBarScheduleFragment;
+import com.remswork.classmanager.adapter.SubjectRecyclerViewAdapter;
+import com.remswork.classmanager.fragment.slidebar.SlideBarScheduleFragment2;
+import com.remswork.classmanager.fragment.slidebar.SlideBarSubjectFragment;
+import com.remswork.classmanager.fragment.slidebar.SliderBarClazzFragment;
 import com.remswork.classmanager.fragment.slidebar.StudentFragment;
-import com.remswork.classmanager.fragment.slidebar.SubjectTabFragment;
+import com.remswork.classmanager.helper.dao.ClazzDatabaseHelper;
+import com.remswork.classmanager.helper.service.SubjectService;
+import com.remswork.classmanager.helper.service.impl.SubjectServiceImpl;
+import com.remswork.classmanager.model.clazz.Clazz;
+import com.remswork.classmanager.model.clazz.Subject;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements
+        SubjectRecyclerViewAdapter.SubjectRecyclerViewAdapterListener,
+        SlideBarSubjectFragment.SlideBarSubjectFragmentListener, ClazzRecyclerViewAdapter
+        .ClazzRecyclerViewAdapterListener, SliderBarClazzFragment.SliderBarClazzFragmentListener{
 
     private Toolbar customToolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private SubjectService subjectService;
+    private ClazzDatabaseHelper clazzDatabaseHelper;
 
     public void initializeWidget(){
         customToolbar = (Toolbar) findViewById(R.id.activity_main_custom_toolbar);
-        customToolbar.setTitle("Class Manager");
+        customToolbar.setTitle("Teacher's assistant APP");
+
         viewPager = (ViewPager) findViewById(R.id.activity_main_viewpager);
         tabLayout = (TabLayout) findViewById(R.id.activity_main_tab);
 
         setSupportActionBar(customToolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         setupViewPager(viewPager);
         tabLayout.setupWithViewPager(viewPager);
     }
@@ -41,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        subjectService = new SubjectServiceImpl(this);
+        clazzDatabaseHelper = new ClazzDatabaseHelper(this);
         initializeWidget();
     }
 
@@ -70,9 +88,28 @@ public class MainActivity extends AppCompatActivity {
         activityStart(null, LoginActivity.class);
     }
 
-    public void activityStart(HashMap attribute, Class activityClass){
+    @Deprecated
+    public void activityStart(final Subject subject, Class activityClass){
         Intent intent = new Intent(this, activityClass);
-        intent.putExtra("attribute", attribute);
+        intent.putExtra("subject", subject);
+        intent.putExtra("typeRequest", 0);
+        startActivity(intent);
+    }
+
+    public void activityStart(final Subject subject, final int typeRequest){
+        Intent intent = new Intent(this, SubjectActivity.class);
+        intent.putExtra("subject", subject);
+        intent.putExtra("typeRequest", typeRequest);
+        startActivity(intent);
+    }
+
+    public void activityStart(final Clazz clazz, final int typeRequest){
+        Intent intent = new Intent(this, ClazzActivity.class);
+        intent.putExtra("subject", clazz.getSubject());
+        intent.putExtra("section", clazz.getSection());
+        intent.putParcelableArrayListExtra("scheduleList", (ArrayList<? extends Parcelable>)
+                clazz.getListOfSchedule());
+        intent.putExtra("typeRequest", typeRequest);
         startActivity(intent);
     }
 
@@ -88,11 +125,45 @@ public class MainActivity extends AppCompatActivity {
     private void setupViewPager(ViewPager viewPager) {
         SlideBarViewPagerAdapter slideBarViewPagerAdapter = new SlideBarViewPagerAdapter(
                 getSupportFragmentManager());
-        slideBarViewPagerAdapter.addFrag(new SlideBarScheduleFragment(), "Schedule");
-        slideBarViewPagerAdapter.addFrag(new ClazzFragment(), "Class");
-        slideBarViewPagerAdapter.addFrag(new SubjectTabFragment(), "Subject");
+        slideBarViewPagerAdapter.addFrag(new SlideBarScheduleFragment2(), "Schedule");
+        slideBarViewPagerAdapter.addFrag(new SliderBarClazzFragment(), "Class");
+        slideBarViewPagerAdapter.addFrag(new SlideBarSubjectFragment(), "Subject");
         slideBarViewPagerAdapter.addFrag(new StudentFragment(), "Student");
         viewPager.setAdapter(slideBarViewPagerAdapter);
     }
 
+    @Override
+    public void openSubject(Subject subject) {
+        activityStart(subject, SubjectActivity.VIEW);
+    }
+
+    @Override
+    public void deleteSubject(int id) {
+        subjectService.deleteSubjectById(id);
+    }
+
+    @Override
+    public void openSubject() {
+        activityStart(new Subject(), SubjectActivity.ADD);
+    }
+
+    @Override
+    public void updateSubject(int id, Subject newSubject) {
+        activityStart(newSubject, SubjectActivity.UPDATE);
+    }
+
+    @Override
+    public void viewClazz(Clazz clazz) {
+        activityStart(clazz, ClazzActivity.VIEW);
+    }
+
+    @Override
+    public void deleteClazz(int clazzId) {
+        clazzDatabaseHelper.deleteClazzById(clazzId);
+    }
+
+    @Override
+    public void addClass() {
+        activityStart(new Clazz(), ClazzActivity.ADD);
+    }
 }

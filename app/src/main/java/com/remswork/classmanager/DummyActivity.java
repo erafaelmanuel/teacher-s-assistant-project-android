@@ -7,11 +7,34 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
+import com.remswork.classmanager.helper.dao.ClazzDatabaseHelper;
 import com.remswork.classmanager.helper.dao.ScheduleDatabaseHelper;
 import com.remswork.classmanager.helper.dao.StudentDatabaseHelper;
+import com.remswork.classmanager.helper.dao.SubjectDatabaseHelper;
+import com.remswork.classmanager.helper.service.ClazzService;
+import com.remswork.classmanager.helper.service.ScheduleService;
+import com.remswork.classmanager.helper.service.SectionService;
+import com.remswork.classmanager.helper.service.SubjectService;
+import com.remswork.classmanager.helper.service.SyllabusService;
+import com.remswork.classmanager.helper.service.TeacherService;
+import com.remswork.classmanager.helper.service.TermService;
+import com.remswork.classmanager.helper.service.impl.ClazzServiceImpl;
+import com.remswork.classmanager.helper.service.impl.ScheduleServiceImpl;
+import com.remswork.classmanager.helper.service.impl.SectionServiceImpl;
+import com.remswork.classmanager.helper.service.impl.SubjectServiceImpl;
+import com.remswork.classmanager.helper.service.impl.SyllabusServiceImpl;
+import com.remswork.classmanager.helper.service.impl.TeacherServiceImpl;
+import com.remswork.classmanager.helper.service.impl.TermServiceImpl;
+import com.remswork.classmanager.model.clazz.Clazz;
+import com.remswork.classmanager.model.clazz.Schedule;
+import com.remswork.classmanager.model.clazz.Section;
+import com.remswork.classmanager.model.clazz.Subject;
 import com.remswork.classmanager.model.clazz.Teacher;
 import com.remswork.classmanager.model.grade.Syllabus;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
 /**
  * Created by Rafael on 7/4/2017.
@@ -54,7 +77,7 @@ public class DummyActivity extends AppCompatActivity {
         //subjectDatabaseHelper.deleteSubjectById(1);
       // Toast.makeText(this, subjectDatabaseHelper.addSubject(new Subject(1 , "name","code","desc", 3, 1)) + "", Toast.LENGTH_LONG)
        //Toast.makeText(this, subjectDatabaseHelper.getAllSubject().size() + "", Toast.LENGTH_LONG)
-        StudentDatabaseHelper helper  = new StudentDatabaseHelper(this);
+//        StudentDatabaseHelper helper  = new StudentDatabaseHelper(this);
         //helper.upgradeTable(true);
 
         //helper.updateStudentById(1, new Student(1, "aris","beta","coconut", 1, "m", 1,-1));
@@ -110,7 +133,47 @@ public class DummyActivity extends AppCompatActivity {
         //saveUserDetail("", "");
         //goToNextActiviy(null, LoginActivity.class);
 
+//        ClazzDatabaseHelper clazzDatabaseHelper = new ClazzDatabaseHelper(this);
+//
+//        SubjectService subjectService = new SubjectServiceImpl(this);
+//        TeacherService teacherService = new TeacherServiceImpl(this);
+//        SectionService sectionService = new SectionServiceImpl(this);
+//        ScheduleService scheduleService = new ScheduleServiceImpl(this);
+//        TermService termService = new TermServiceImpl(this);
+//        SyllabusService syllabusService = new SyllabusServiceImpl(this);
 
+//        Subject subject = new Subject(1, "Java Programming", "JAVA404","This is for ...", 2, 0);
+//        Section section = new Section(1, "1A", 1, "No comment", null);
+//        Syllabus syllabus = new Syllabus();
+//        syllabus.setId(1);
+//        Teacher teacher = new Teacher(1, "Rafael","Manuel","erafaelmanuel@gmail.com","rafael123");
+
+//        syllabusService.addSyllabus(syllabus);
+//        sectionService.addSection(section);
+//        subjectService.addSubject(subject);
+//        teacherService.addTeacher(teacher);
+
+//        Clazz clazz = new Clazz();
+//        clazz.setId(1);
+//        clazz.setTeacher(teacher);
+//        clazz.setTermType("Semester");
+//        clazz.setSubject(subject);
+//        clazz.setSection(section);
+//        clazz.setSyllabus(syllabus);
+//        clazzDatabaseHelper.addClazz(clazz);
+//
+//        Schedule schedule1 = new Schedule(1, "Friday", "12:00 PM", 120, "CS 102", 1);
+//        Schedule schedule2 = new Schedule(2, "Monday", "9:00 AM", 120, "CS 103", 1);
+//
+//        scheduleService.addSchedule(schedule1, schedule2);
+//        clazzDatabaseHelper.onUpgrade(clazzDatabaseHelper.getWritableDatabase(),
+//                clazzDatabaseHelper.VERSION-1,clazzDatabaseHelper.VERSION);
+
+
+        SubjectDatabaseHelper subjectService = new SubjectDatabaseHelper(this);
+
+        Toast.makeText(this,subjectService.getAllSubject().get(0) + "", Toast.LENGTH_LONG)
+        .show();
     }
 
     public void saveUserDetail(final String username, final String password){

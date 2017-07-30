@@ -19,13 +19,13 @@ import java.util.List;
 public class SubjectDatabaseHelper extends DatabaseHelper {
 
 
-    private static final String TABLE_NAME = "tbl_subject";
-    private static final String COL_1 = "id";
-    private static final String COL_2 = "name";
+    protected static final String TABLE_NAME = "tbl_subject";
+    protected static final String COL_1 = "id";
+    protected static final String COL_2 = "name";
     private static final String COL_3 = "code";
     private static final String COL_4 = "desc";
     private static final String COL_5 = "unit";
-    private static final String COL_6 = "imageIcon";
+    private static final String COL_6 = "category";
 
     public SubjectDatabaseHelper(Context context){
         super(context, DATABASE_NAME, VERSION);
@@ -35,7 +35,7 @@ public class SubjectDatabaseHelper extends DatabaseHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String query = String.format("CREATE TABLE IF NOT EXISTS '%s' (%s INTEGER PRIMARY KEY " +
-                "AUTOINCREMENT, %S TEXT,%S TEXT, %s TEXT, %s INTEGER, %s INTEGER);",
+                "AUTOINCREMENT, %S TEXT,%S TEXT, %s TEXT, %s INTEGER, %s TEXT);",
                 TABLE_NAME, COL_1, COL_2, COL_3, COL_4, COL_5, COL_6);
         db.execSQL(query);
     }
@@ -50,20 +50,25 @@ public class SubjectDatabaseHelper extends DatabaseHelper {
         try{
             SQLiteDatabase db = getWritableDatabase();
             ContentValues contentValues = new ContentValues();
-            contentValues.put(COL_1, subject.getId());
+//            contentValues.put(COL_1, subject.getId());
             contentValues.put(COL_2, subject.getName());
             contentValues.put(COL_3, subject.getCode());
             contentValues.put(COL_4, subject.getDesc());
             contentValues.put(COL_5, subject.getUnit());
-            contentValues.put(COL_6, subject.getImageIcon());
+            contentValues.put(COL_6, subject.getCategory());
 
-            if(db.insert(TABLE_NAME, null, contentValues) != 1)
+            if(getSubjectById(subject.getId()) == null) {
+                db.insert(TABLE_NAME, null, contentValues);
                 return true;
-            else
-                throw new SubjectDatabaseHelperException("Subject can't be added");
+            }else
+                throw new SubjectDatabaseHelperException(
+                        "Subject already exists with ID : " + subject.getId());
+        }catch (SQLiteException e){
+            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
+            e.printStackTrace();
+            return false;
         }catch(SubjectDatabaseHelperException e){
             e.printStackTrace();
-            onUpgrade(getWritableDatabase(), VERSION-1, VERSION);
             return false;
         }
     }
@@ -82,7 +87,7 @@ public class SubjectDatabaseHelper extends DatabaseHelper {
                     subject.setCode(cursor.getString(2));
                     subject.setDesc(cursor.getString(3));
                     subject.setUnit(cursor.getInt(4));
-                    subject.setImageIcon(cursor.getInt(5));
+                    subject.setCategory(cursor.getString(5));
                     cursor.close();
                     return subject;
                 } else
@@ -95,7 +100,7 @@ public class SubjectDatabaseHelper extends DatabaseHelper {
             e.printStackTrace();
             return null;
         }catch(SubjectDatabaseHelperException e){
-            e.printStackTrace();
+            //e.printStackTrace();
             return null;
         }
     }
@@ -114,7 +119,7 @@ public class SubjectDatabaseHelper extends DatabaseHelper {
                     subject.setCode(cursor.getString(2));
                     subject.setDesc(cursor.getString(3));
                     subject.setUnit(cursor.getInt(4));
-                    subject.setImageIcon(cursor.getInt(5));
+                    subject.setCategory(cursor.getString(5));
                     cursor.close();
                     return subject;
                 } else
@@ -148,7 +153,7 @@ public class SubjectDatabaseHelper extends DatabaseHelper {
                         subject.setCode(cursor.getString(2));
                         subject.setDesc(cursor.getString(3));
                         subject.setUnit(cursor.getInt(4));
-                        subject.setImageIcon(cursor.getInt(5));
+                        subject.setCategory(cursor.getString(5));
                         listOfSubject.add(subject);
                     }
                     cursor.close();
@@ -172,12 +177,12 @@ public class SubjectDatabaseHelper extends DatabaseHelper {
         try{
             SQLiteDatabase db = getWritableDatabase();
             ContentValues contentValues = new ContentValues();
-            contentValues.put(COL_1, newSubject.getId());
+//            contentValues.put(COL_1, newSubject.getId());
             contentValues.put(COL_2, newSubject.getName());
             contentValues.put(COL_3, newSubject.getCode());
             contentValues.put(COL_4, newSubject.getDesc());
             contentValues.put(COL_5, newSubject.getUnit());
-            contentValues.put(COL_6, newSubject.getImageIcon());
+            contentValues.put(COL_6, newSubject.getCategory());
             try {
                 if (db.update(TABLE_NAME, contentValues, COL_1 + " = " + id, null) > 0)
                     return true;
