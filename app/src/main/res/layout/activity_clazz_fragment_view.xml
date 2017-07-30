@@ -199,7 +199,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Schedules"
+                                android:text="Schedule"
                                 android:textColor="@color/colorMidNightBlue"
                                 android:textSize="20sp"
                                 android:textStyle="bold" />
@@ -304,7 +304,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Students"
+                                android:text="Student"
                                 android:textColor="@color/colorMidNightBlue"
                                 android:textSize="20sp"
                                 android:textStyle="bold" />

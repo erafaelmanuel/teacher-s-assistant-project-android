@@ -1,18 +1,13 @@
 package com.remswork.classmanager.fragment;
 
 import android.app.Fragment;
-import android.content.ContentProvider;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.v7.widget.CardView;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TableRow;
@@ -25,10 +20,6 @@ import com.remswork.classmanager.model.clazz.Subject;
 
 import java.util.List;
 import java.util.Locale;
-
-import static android.R.attr.layout_height;
-import static android.R.attr.layout_width;
-import static android.R.attr.orientation;
 
 /**
  * Created by Rem-sama on 7/27/2017.

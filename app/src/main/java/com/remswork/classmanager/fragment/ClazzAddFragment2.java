@@ -10,6 +10,7 @@ import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -150,6 +151,7 @@ public class ClazzAddFragment2 extends Fragment implements View.OnClickListener,
                         mSchedules.remove(s);
                     }
                 }
+
                 Section section = new Section();
                 section.setSectionName(mSectionNameText.getText().toString());
                 section.setYear(mYearText.getText().toString() != "" ? Integer.parseInt(mYearText

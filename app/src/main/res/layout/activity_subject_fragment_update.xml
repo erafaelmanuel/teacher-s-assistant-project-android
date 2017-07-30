@@ -81,11 +81,12 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                android:paddingRight="10dp">
 
                                 <android.support.design.widget.TextInputLayout
                                     android:id="@+id/fragment_subject_add_text_title_layout"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     app:hintTextAppearance="@style/AppTheme.Stylex.TIL"
                                     app:theme="@style/AppTheme.Stylex.TIL"
@@ -95,7 +96,6 @@
                                         android:id="@+id/fragment_subject_add_text_title"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:width="250dp"
                                         android:backgroundTint="@color/colorWhite"
                                         android:hint="Title"
                                         android:inputType="text"
@@ -133,11 +133,12 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                android:paddingRight="10dp">
 
                                 <android.support.design.widget.TextInputLayout
                                     android:id="@+id/fragment_subject_add_text_description_layout"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     app:hintTextAppearance="@style/AppTheme.Stylex.TIL"
                                     app:theme="@style/AppTheme.Stylex.TIL"
@@ -147,7 +148,6 @@
                                         android:id="@+id/fragment_subject_add_text_description"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:width="250dp"
                                         android:backgroundTint="@color/colorWhite"
                                         android:hint="Description"
                                         android:inputType="text"
@@ -183,11 +183,12 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                android:paddingRight="10dp">
 
                                 <android.support.design.widget.TextInputLayout
                                     android:id="@+id/fragment_subject_add_text_code_layout"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     app:hintTextAppearance="@style/AppTheme.Stylex.TIL"
                                     app:theme="@style/AppTheme.Stylex.TIL"
@@ -197,7 +198,6 @@
                                         android:id="@+id/fragment_subject_add_text_code"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:width="250dp"
                                         android:backgroundTint="@color/colorWhite"
                                         android:hint="Code"
                                         android:inputType="text"
@@ -233,11 +233,12 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                android:paddingRight="10dp">
 
                                 <android.support.design.widget.TextInputLayout
                                     android:id="@+id/fragment_subject_add_text_unit_layout"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     app:hintTextAppearance="@style/AppTheme.Stylex.TIL"
                                     app:theme="@style/AppTheme.Stylex.TIL"
@@ -247,7 +248,6 @@
                                         android:id="@+id/fragment_subject_add_text_unit"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:width="250dp"
                                         android:backgroundTint="@color/colorWhite"
                                         android:hint="Unit"
                                         android:inputType="text"
@@ -283,11 +283,12 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
-                                android:orientation="vertical">
+                                android:orientation="vertical"
+                                android:paddingRight="10dp">
 
                                 <android.support.design.widget.TextInputLayout
                                     android:id="@+id/fragment_subject_add_text_category_layout"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     app:hintTextAppearance="@style/AppTheme.Stylex.TIL"
                                     app:theme="@style/AppTheme.Stylex.TIL"
@@ -297,7 +298,6 @@
                                         android:id="@+id/fragment_subject_add_text_category"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:width="250dp"
                                         android:backgroundTint="@color/colorWhite"
                                         android:hint="Category"
                                         android:inputType="text"

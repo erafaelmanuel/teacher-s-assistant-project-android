@@ -105,10 +105,12 @@ public class MainActivity extends AppCompatActivity implements
 
     public void activityStart(final Clazz clazz, final int typeRequest){
         Intent intent = new Intent(this, ClazzActivity.class);
-        intent.putExtra("subject", clazz.getSubject());
-        intent.putExtra("section", clazz.getSection());
-        intent.putParcelableArrayListExtra("scheduleList", (ArrayList<? extends Parcelable>)
-                clazz.getListOfSchedule());
+        if(clazz != null) {
+            intent.putExtra("subject", clazz.getSubject());
+            intent.putExtra("section", clazz.getSection());
+            intent.putParcelableArrayListExtra("scheduleList", (ArrayList<? extends Parcelable>)
+                    clazz.getListOfSchedule());
+        }
         intent.putExtra("typeRequest", typeRequest);
         startActivity(intent);
     }
@@ -144,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void openSubject() {
-        activityStart(new Subject(), SubjectActivity.ADD);
+        activityStart((Subject) null, SubjectActivity.ADD);
     }
 
     @Override
@@ -164,6 +166,6 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public void addClass() {
-        activityStart(new Clazz(), ClazzActivity.ADD);
+        activityStart((Clazz) null, ClazzActivity.ADD);
     }
 }

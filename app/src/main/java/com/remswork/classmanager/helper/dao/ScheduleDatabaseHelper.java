@@ -50,13 +50,13 @@ public class ScheduleDatabaseHelper extends DatabaseHelper {
         try{
             SQLiteDatabase db = getWritableDatabase();
             ContentValues contentValues = new ContentValues();
-            contentValues.put(COL_1, schedule.getId());
+//            contentValues.put(COL_1, schedule.getId());
             contentValues.put(COL_2, schedule.getDay());
             contentValues.put(COL_3, schedule.getTime());
             contentValues.put(COL_4, schedule.getHour());
             contentValues.put(COL_5, schedule.getRoom());
             contentValues.put(COL_6, schedule.getClazzId());
-            if(getScheduleById(schedule.getId()) == null) {
+            if(getScheduleById(schedule.getId()) == null || true) {
                 if (db.insertOrThrow(TABLE_NAME, null, contentValues) != -1)
                     return true;
                 else

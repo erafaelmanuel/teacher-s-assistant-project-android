@@ -58,8 +58,7 @@ public class SubjectActivity extends AppCompatActivity implements SubjectAddFrag
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         //Extras
-        Bundle bundle = new Bundle();
-        bundle.putParcelable("subject", subject);
+        Bundle bundle = getIntent().getExtras();
 
         //Request
         if(typeRequest == SubjectActivity.VIEW) {
